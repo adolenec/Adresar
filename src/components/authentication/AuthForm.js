@@ -1,9 +1,13 @@
+import { useState } from 'react';
 import classes from "./AuthForm.module.css";
 import addressBg from "../../assets/addressBook.webp";
 
 import useInput from "../../hooks/useInput";
 
 const AuthForm = (props) => {
+
+    const [isLogin, setIsLogin] = useState(true);
+
   //email
   const {
     value: enteredEmail,
@@ -49,6 +53,10 @@ const AuthForm = (props) => {
       resetPasswordInput();
   }
 
+  const changeAuth = () => {
+    setIsLogin((prevState) => !prevState);
+  }
+
   return (
     <section className={classes["form-page"]}>
       <div className={classes["form-info"]}>
@@ -80,10 +88,10 @@ const AuthForm = (props) => {
             {passwordInputHasError && <p>Password must contain at least one number and one special character</p>}
           </div>
           <div className={classes["btn-container"]}>
-            <button disabled={!formIsValid}>Login</button>
+            <button disabled={!formIsValid}>{isLogin ? 'Login' : 'Sign up'}</button>
           </div>
-          <button className={classes["switchBtn"]}>
-            Don't have an account? Sign up for free!
+          <button type="button" className={classes["switchBtn"]} onClick={changeAuth}>
+            {isLogin ? 'Don\'t have an account? Sign up for free' : 'Already have an account? Login'}
           </button>
         </form>
       </div>
