@@ -79,7 +79,7 @@
 .btn-container button:disabled,
 .btn-container button:hover:disabled{
     background-color: #cccccc;
-  color: #666666;
+    color: #666666;
     cursor: not-allowed;
 }
 
@@ -95,4 +95,9 @@
 .switchBtn:hover{
     text-decoration: underline;
     cursor: pointer;
+}
+
+.error-msg{
+    padding: .5rem;
+    color: rgb(167, 19, 19);
 }
