@@ -75,6 +75,14 @@
     background: rgb(228, 106, 7);
 }
 
+
+.btn-container button:disabled,
+.btn-container button:hover:disabled{
+    background-color: #cccccc;
+  color: #666666;
+    cursor: not-allowed;
+}
+
 .switchBtn{
     color: rgb(97, 97, 97);
     background: none;
