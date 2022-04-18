@@ -54,7 +54,7 @@
 
 .form-control label{
     display: block;
-    padding: .3rem;
+    padding: .3rem 0;
     color: rgb(97, 96, 96);
     font-size: 1.1rem;
 }

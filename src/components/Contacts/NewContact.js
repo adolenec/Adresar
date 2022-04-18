@@ -175,8 +175,9 @@ const NewContact = () => {
         </div>
         {enteredContactType && (
           <div className={classes["form-control"]}>
-            <label htmlFor="phone">{enteredContactType}</label>
+            <label htmlFor={enteredContactType}>{enteredContactType}</label>
             <input
+              id={enteredContactType}
               type={contactTypeInput}
               value={enteredContactValue}
               onChange={enteredContactValueHandler}
