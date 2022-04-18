@@ -9,6 +9,11 @@
     border-radius: 50%;
 }
 
+.form-info i:hover{
+    background:rgb(88, 88, 88);
+    cursor: pointer;
+}
+
 .form-info {
     display: flex;
     flex-direction: column;
@@ -74,4 +79,16 @@
 .submit-btn button:hover{
     cursor: pointer;
     background: rgb(228, 106, 7);
+}
+
+.error-msg{
+    padding: .5rem;
+    color: rgb(167, 19, 19);
+}
+
+.submit-btn button:disabled,
+.submit-btn button:hover:disabled{
+    background-color: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
 }
