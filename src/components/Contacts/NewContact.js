@@ -44,30 +44,67 @@ const NewContact = () => {
     resetInputs: resetEnteredContactTypeHandler,
   } = useInput((value) => value.trim() !== "");
 
+  const hasNumber = /\d/;
+
+  //contact
+
+  const {
+    value: enteredContactValue,
+    inputChangeHandler: enteredContactValueHandler,
+    isValid: enteredContactValueIsValid,
+    resetInputs: resetEnteredContactValueHandler,
+  } = useInput((value) => hasNumber.test(value) || value.includes("@"));
+
   //overall form validity
   let formIsValid = false;
   if (
     LastNameIsValid &&
     nameIsValid &&
     enteredDateIsValid &&
-    enteredContactTypeIsValid
+    enteredContactTypeIsValid &&
+    enteredContactValueIsValid
   ) {
     formIsValid = true;
   }
 
-  const formSubmitHandler = (e) => {
+  const formSubmitHandler = e => {
     e.preventDefault();
 
     if (!formIsValid) {
       return;
     }
-    console.log(enteredContactType);
 
+    const newContactData = {
+      name: enteredName,
+      lastName: enteredLastName,
+      dateOfBirth: enteredDate,
+      contactType: enteredContactType,
+      contact: enteredContactValue,
+    };
+
+    fetch("https://adresar-ea8a7-default-rtdb.firebaseio.com/contacts.json", {
+      method: "POST",
+      body: JSON.stringify({
+        contact: newContactData,
+      })
+    });
+
+    //reset inputs
     resetNameHandler("");
     resetLastNameHandler("");
     resetEnteredDateHandler("");
     resetEnteredContactTypeHandler("");
+    resetEnteredContactValueHandler("");
   };
+
+  const contactTypeInput =
+    enteredContactType === "Mobile Phone"
+      ? "phone"
+      : enteredContactType === "Telephone"
+      ? "tel"
+      : enteredContactType === "Email"
+      ? "email"
+      : "text";
 
   return (
     <section className={classes["add-contact-form"]}>
@@ -130,12 +167,22 @@ const NewContact = () => {
             <option value="" disabled>
               Choose Contact Type
             </option>
-            <option value="mobile phone">Mobile phone</option>
-            <option value="telephone">Telephone</option>
-            <option value="email">Email</option>
-            <option value="pager">Pager</option>
+            <option value="Mobile Phone">Mobile phone</option>
+            <option value="Telephone">Telephone</option>
+            <option value="Email">Email</option>
+            <option value="Pager">Pager</option>
           </select>
         </div>
+        {enteredContactType && (
+          <div className={classes["form-control"]}>
+            <label htmlFor="phone">{enteredContactType}</label>
+            <input
+              type={contactTypeInput}
+              value={enteredContactValue}
+              onChange={enteredContactValueHandler}
+            />
+          </div>
+        )}
         <div className={classes["submit-btn"]}>
           <button disabled={!formIsValid}>Add New Contact</button>
         </div>
