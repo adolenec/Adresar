@@ -1,0 +1,77 @@
+.form-info i{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ccc;
+    height: 300px;
+    width: 300px;
+    background: rgb(56, 56, 56);
+    border-radius: 50%;
+}
+
+.form-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    border-right: 3px solid rgb(231, 89, 37);
+    color: rgb(97, 96, 96);
+    font-weight: bold;
+}
+
+.add-contact-form{
+    width: 95%;
+    max-width: 60rem;
+    padding: 2rem;
+    background: rgba(0, 0, 0, .2);
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 8rem;
+}
+
+.form input:focus{
+    outline: none;
+}
+
+.form{
+    flex: 1;
+    padding: 1.5rem 0;
+}
+
+.form-control, .submit-btn{
+    padding: .5rem 3rem;
+}
+
+.form-control label{
+    display: block;
+    padding: .3rem;
+    color: rgb(97, 96, 96);
+    font-size: 1.1rem;
+}
+
+.form-control input, .form-control select {
+    width: 100%;
+    padding: .5rem;
+    border: none;
+    border-radius: 10px;
+}
+
+.submit-btn button{
+    padding: .5rem;
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    background: rgb(231, 89, 37);
+    border-radius: 10px;
+    margin-top: .5rem;
+}
+
+.submit-btn button:hover{
+    cursor: pointer;
+    background: rgb(228, 106, 7);
+}
