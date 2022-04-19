@@ -2,6 +2,9 @@ import { useState } from 'react';
 import classes from "./AuthForm.module.css";
 import addressBg from "../../assets/addressBook.webp";
 import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { authActions } from '../store/auth';
+
 
 import useInput from "../../hooks/useInput";
 
@@ -9,6 +12,9 @@ const AuthForm = (props) => {
     const [errorMsg, setErrorMsg] = useState('');
     const [isLogin, setIsLogin] = useState(true);
     const history = useHistory();
+
+
+    const dispatch = useDispatch();
 
   //email
   const {
@@ -71,9 +77,7 @@ const AuthForm = (props) => {
           }
       }).then(res => {
           if(res.ok){
-              return res.json().then(data=>{
-                  setErrorMsg('');
-              });
+              return res.json();
           } else {
               return res.json().then(data => {
                 console.log(data);
@@ -88,7 +92,7 @@ const AuthForm = (props) => {
               })
           }
       }).then(data => {
-          //here save token in redux store later
+          dispatch(authActions.setToken(data.idToken));
           history.replace('/adresar') 
       }).catch(errorMsg => {
           setErrorMsg(errorMsg.message);
