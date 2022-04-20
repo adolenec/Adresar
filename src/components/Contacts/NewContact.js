@@ -2,6 +2,7 @@ import classes from "./NewContact.module.css";
 import useInput from "../../hooks/useInput";
 
 const NewContact = () => {
+
   //name
   const {
     value: enteredName,

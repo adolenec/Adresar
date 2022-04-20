@@ -3,6 +3,7 @@ import { Fragment } from "react";
 
 import AuthenticationPage from "./pages/AuthenticationPage";
 import NewContactPage from "./pages/NewContactPage";
+import ContactsPage from "./pages/ContactsPage";
 import Layout from "./components/layout/Layout";
 import { useSelector } from "react-redux";
 
@@ -19,11 +20,12 @@ function App() {
         )}
         {!isAuthenticated && <Redirect to="/" exact />}
         <Layout>
-          {isAuthenticated && (
             <Route path="/kontakt">
               <NewContactPage />
             </Route>
-          )}
+            <Route path="/adresar">
+              <ContactsPage/>
+            </Route>
         </Layout>
       </Switch>
     </Fragment>

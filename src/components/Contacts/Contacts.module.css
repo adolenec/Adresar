@@ -1,0 +1,11 @@
+.contacts-container{
+    width: 95%;
+    max-width: 60rem;
+    padding: 2rem;
+    background: rgba(0, 0, 0, .2);
+    border-radius: 10px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 8rem;
+}
