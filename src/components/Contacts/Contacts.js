@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 import ContactItem from "./ContactItem";
 import classes from "./Contacts.module.css";
+import ContactsHeader from "./ContactsHeader";
 
 const Contacts = (props) => {
   const [contacts, setContacts] = useState([]);
@@ -17,8 +18,6 @@ const Contacts = (props) => {
       })
       .then((data) => {
         const responseData = data;
-
-        console.log(data);
 
         const loadedContacts = [];
 
@@ -51,7 +50,12 @@ const Contacts = (props) => {
     />
   ));
 
-  return <div className={classes["contacts-container"]}>{contactsList}</div>;
+  return (
+    <div className={classes["contacts-container"]}>
+      <ContactsHeader />
+      <div>{contactsList}</div>
+    </div>
+  );
 };
 
 export default Contacts;
