@@ -6,6 +6,7 @@ import ContactsHeader from "./ContactsHeader";
 
 const Contacts = (props) => {
   const [contacts, setContacts] = useState([]);
+  const [filteredContacts, setFilteredContacts] = useState([]);
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -33,41 +34,58 @@ const Contacts = (props) => {
         }
 
         setContacts(loadedContacts);
+        setFilteredContacts(loadedContacts);
       })
       .catch((err) => {
         setError(err.message);
       });
   }, []);
 
-  console.log(contacts);
+  const sortedContactsAscending = [...filteredContacts].sort(
+    (contactA, contactB) => {
+      return contactA.lastName.toLowerCase() > contactB.lastName.toLowerCase()
+        ? 1
+        : -1;
+    }
+  );
 
-  const sortedContactsAscending = [...contacts].sort((contactA, contactB) => {
-    return contactA.lastName.toLowerCase() > contactB.lastName.toLowerCase()
-      ? 1
-      : -1;
-  });
+  const sortedContactsDescending = [...filteredContacts].sort(
+    (contactA, contactB) => {
+      return contactA.lastName.toLowerCase() < contactB.lastName.toLowerCase()
+        ? 1
+        : -1;
+    }
+  );
 
-  const sortedContactsDescending = [...contacts].sort((contactA, contactB) => {
-    return contactA.lastName.toLowerCase() < contactB.lastName.toLowerCase()
-      ? 1
-      : -1;
-  });
-
-  const sortAscending = () =>{
-    setContacts(sortedContactsAscending);
-  }
+  const sortAscending = () => {
+    setFilteredContacts(sortedContactsAscending);
+  };
 
   const sortDescending = () => {
-      setContacts(sortedContactsDescending);
-  }
+    setFilteredContacts(sortedContactsDescending);
+  };
 
+  const filterArray = (value) => {
+    if (value) {
+      const filteredContacts = contacts.filter((contact) => {
+        return (
+          contact.lastName.toLowerCase().includes(value.toLowerCase()) ||
+          contact.name.toLowerCase().includes(value.toLowerCase()) ||
+          (contact.name.toLowerCase() + contact.lastName.toLowerCase())
+            .replace(/\s+/g, "")
+            .includes(value.toLowerCase().replace(/\s+/g, ""))
+        );
+      });
+      setFilteredContacts(filteredContacts);
+    } else {
+      setFilteredContacts(contacts);
+    }
+  };
 
-  const contactsList = contacts.map((contact) => (
+  const contactsList = filteredContacts.map((contact) => (
     <ContactItem
       key={contact.id}
       contact={contact.contact}
-      contactType={contact.contactType}
-      dateOfBirth={contact.dateOfBirth}
       name={contact.name}
       lastName={contact.lastName}
     />
@@ -75,7 +93,11 @@ const Contacts = (props) => {
 
   return (
     <div className={classes["contacts-container"]}>
-      <ContactsHeader onSortAsc={sortAscending} onSortDesc={sortDescending} />
+      <ContactsHeader
+        onSortAsc={sortAscending}
+        onSortDesc={sortDescending}
+        onInput={filterArray}
+      />
       <div>{contactsList}</div>
     </div>
   );
