@@ -39,6 +39,29 @@ const Contacts = (props) => {
       });
   }, []);
 
+  console.log(contacts);
+
+  const sortedContactsAscending = [...contacts].sort((contactA, contactB) => {
+    return contactA.lastName.toLowerCase() > contactB.lastName.toLowerCase()
+      ? 1
+      : -1;
+  });
+
+  const sortedContactsDescending = [...contacts].sort((contactA, contactB) => {
+    return contactA.lastName.toLowerCase() < contactB.lastName.toLowerCase()
+      ? 1
+      : -1;
+  });
+
+  const sortAscending = () =>{
+    setContacts(sortedContactsAscending);
+  }
+
+  const sortDescending = () => {
+      setContacts(sortedContactsDescending);
+  }
+
+
   const contactsList = contacts.map((contact) => (
     <ContactItem
       key={contact.id}
@@ -52,7 +75,7 @@ const Contacts = (props) => {
 
   return (
     <div className={classes["contacts-container"]}>
-      <ContactsHeader />
+      <ContactsHeader onSortAsc={sortAscending} onSortDesc={sortDescending} />
       <div>{contactsList}</div>
     </div>
   );
