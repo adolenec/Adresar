@@ -6,6 +6,7 @@ import NewContactPage from "./pages/NewContactPage";
 import ContactsPage from "./pages/ContactsPage";
 import Layout from "./components/layout/Layout";
 import { useSelector } from "react-redux";
+import ContactDetailPage from "./pages/ContactDetailPage";
 
 function App() {
   const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);
@@ -20,11 +21,14 @@ function App() {
         )}
         {!isAuthenticated && <Redirect to="/" exact />}
         <Layout>
-            <Route path="/kontakt">
+            <Route path="/kontakt" exact>
               <NewContactPage />
             </Route>
             <Route path="/adresar">
               <ContactsPage/>
+            </Route>
+            <Route path='/kontakt/detalji/:kontaktId'>
+              <ContactDetailPage/>
             </Route>
         </Layout>
       </Switch>

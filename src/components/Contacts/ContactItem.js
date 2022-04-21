@@ -1,4 +1,5 @@
 import classes from "./ContactItem.module.css";
+import { Link } from "react-router-dom";
 
 const ContactItem = (props) => {
   return (
@@ -8,7 +9,7 @@ const ContactItem = (props) => {
       </div>
       <div className={classes["contact-info"]}>
         <h3>
-          {props.name} {props.lastName}
+          <Link to={`/kontakt/detalji/${props.id}`}>{props.name} {props.lastName}</Link>
         </h3>
         <h3>{props.contact}</h3>
       </div>

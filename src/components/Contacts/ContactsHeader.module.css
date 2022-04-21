@@ -56,5 +56,6 @@ input[type="search"]::placeholder{
 
 .select option{
     background:rgb(32, 32, 32);
+    color: #ccc;
 }
 

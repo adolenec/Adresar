@@ -4,13 +4,17 @@ import ContactItem from "./ContactItem";
 import classes from "./Contacts.module.css";
 import ContactsHeader from "./ContactsHeader";
 import Pagination from "./Pagination";
+import { contactsActions } from "../store/contacts";
+import { useDispatch } from "react-redux";
 
 const Contacts = (props) => {
   const [contacts, setContacts] = useState([]);
   const [filteredContacts, setFilteredContacts] = useState([]);
   const [error, setError] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [contactsPerPage, setContactsPerPage] = useState(2);
+  const [contactsPerPage, setContactsPerPage] = useState(5);
+
+  const dispatch = useDispatch()
 
   useEffect(() => {
     fetch("https://adresar-ea8a7-default-rtdb.firebaseio.com/contacts.json")
@@ -38,11 +42,13 @@ const Contacts = (props) => {
 
         setContacts(loadedContacts);
         setFilteredContacts(loadedContacts);
+        dispatch(contactsActions.setContacts(loadedContacts));
       })
       .catch((err) => {
         setError(err.message);
       });
   }, []);
+
 
   const sortedContactsAscending = [...filteredContacts].sort(
     (contactA, contactB) => {
@@ -83,15 +89,19 @@ const Contacts = (props) => {
 
   const LastContactIndex = currentPage * contactsPerPage;
   const FirstContactIndex = LastContactIndex - contactsPerPage;
-  const activeContacts = filteredContacts.slice(FirstContactIndex, LastContactIndex);
+  const activeContacts = filteredContacts.slice(
+    FirstContactIndex,
+    LastContactIndex
+  );
 
   const activePage = (pageNumber) => {
     setCurrentPage(pageNumber);
-  }
+  };
 
   const contactsList = activeContacts.map((contact) => (
     <ContactItem
       key={contact.id}
+      id={contact.id}
       contact={contact.contact}
       name={contact.name}
       lastName={contact.lastName}
@@ -109,7 +119,11 @@ const Contacts = (props) => {
         onChangePage={setCurrentPage}
       />
       <div>{contactsList}</div>
-      <Pagination contactsPerPage={contactsPerPage} totalContacts={filteredContacts.length} onActivePage={activePage}/>
+      <Pagination
+        contactsPerPage={contactsPerPage}
+        totalContacts={filteredContacts.length}
+        onActivePage={activePage}
+      />
     </div>
   );
 };
