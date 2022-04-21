@@ -86,7 +86,7 @@ const Contacts = (props) => {
   const activeContacts = filteredContacts.slice(FirstContactIndex, LastContactIndex);
 
   const activePage = (pageNumber) => {
-    setCurrentPage(pageNumber)
+    setCurrentPage(pageNumber);
   }
 
   const contactsList = activeContacts.map((contact) => (
@@ -105,6 +105,8 @@ const Contacts = (props) => {
         onSortDesc={sortDescending}
         onInput={filterArray}
         onSelect={setContactsPerPage}
+        active={activeContacts}
+        onChangePage={setCurrentPage}
       />
       <div>{contactsList}</div>
       <Pagination contactsPerPage={contactsPerPage} totalContacts={filteredContacts.length} onActivePage={activePage}/>
