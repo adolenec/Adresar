@@ -37,3 +37,24 @@ input[type="search"]::placeholder{
     color: black;
     cursor: pointer;
 }
+
+.select{
+    width: 12rem;
+    height: 2.5rem;
+    font-size: 1.2rem;
+    background: none;
+    color: #ccc;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.select:hover{
+    background: #ccc;
+    color: black;
+    cursor: pointer;
+}
+
+.select option{
+    background:rgb(32, 32, 32);
+}
+
