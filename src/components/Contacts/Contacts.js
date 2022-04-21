@@ -68,13 +68,9 @@ const Contacts = (props) => {
   const filterArray = (value) => {
     if (value) {
       const filteredContacts = contacts.filter((contact) => {
-        return (
-          contact.lastName.toLowerCase().includes(value.toLowerCase()) ||
-          contact.name.toLowerCase().includes(value.toLowerCase()) ||
-          (contact.name.toLowerCase() + contact.lastName.toLowerCase())
-            .replace(/\s+/g, "")
-            .includes(value.toLowerCase().replace(/\s+/g, ""))
-        );
+        return (contact.name.toLowerCase() + contact.lastName.toLowerCase())
+          .replace(/\s+/g, "")
+          .includes(value.toLowerCase().replace(/\s+/g, ""));
       });
       setFilteredContacts(filteredContacts);
     } else {
