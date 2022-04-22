@@ -28,8 +28,8 @@
     border-radius: 50%;
 }
 
-h2{
-    border-bottom: 2px solid rgb(231, 89, 37);
+.contact-info h2{
+    border-bottom: 2px solid rgb(77, 76, 76);
     padding: 0.5rem 0;
 }
 

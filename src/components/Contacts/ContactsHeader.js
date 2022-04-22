@@ -12,7 +12,7 @@ const ContactsHeader = (props) => {
 
     const searchHandler = e => {
         props.onInput(e.target.value);
-        if(props.activeLength !== 0){
+        if(e.target.value){
           props.onChangePage(1);
         }
     }
