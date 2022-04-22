@@ -54,27 +54,27 @@ const Contacts = (props) => {
   }
 
 
-  const sortedContactsAscending = [...filteredContacts].sort(
-    (contactA, contactB) => {
-      return contactA.lastName.toLowerCase() > contactB.lastName.toLowerCase()
-        ? 1
-        : -1;
-    }
-  );
 
-  const sortedContactsDescending = [...filteredContacts].sort(
-    (contactA, contactB) => {
-      return contactA.lastName.toLowerCase() < contactB.lastName.toLowerCase()
-        ? 1
-        : -1;
-    }
-  );
 
   const sortAscending = () => {
+    const sortedContactsAscending = [...filteredContacts].sort(
+      (contactA, contactB) => {
+        return contactA.lastName.toLowerCase() > contactB.lastName.toLowerCase()
+          ? 1
+          : -1;
+      }
+    );
     setFilteredContacts(sortedContactsAscending);
   };
 
   const sortDescending = () => {
+    const sortedContactsDescending = [...filteredContacts].sort(
+      (contactA, contactB) => {
+        return contactA.lastName.toLowerCase() < contactB.lastName.toLowerCase()
+          ? 1
+          : -1;
+      }
+    );
     setFilteredContacts(sortedContactsDescending);
   };
 
