@@ -12,9 +12,9 @@ const ContactsHeader = (props) => {
 
     const searchHandler = e => {
         props.onInput(e.target.value);
-        if(e.target.value){
-          props.onChangePage(1);
-        }
+        // if(e.target.value){
+        //   props.onChangePage(1);
+        // }
     }
 
     const selectChangeHandler = e => {

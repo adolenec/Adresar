@@ -47,7 +47,11 @@ const Contacts = (props) => {
       .catch((err) => {
         setError(err.message);
       });
-  }, []);
+  }, [dispatch]);
+
+  if(error){
+    return <p>Something went wrong!</p>
+  }
 
 
   const sortedContactsAscending = [...filteredContacts].sort(
@@ -76,6 +80,7 @@ const Contacts = (props) => {
 
   const filterArray = (value) => {
     if (value) {
+      setCurrentPage(1);
       const filteredContacts = contacts.filter((contact) => {
         return (contact.name.toLowerCase() + contact.lastName.toLowerCase())
           .replace(/\s+/g, "")
@@ -115,8 +120,6 @@ const Contacts = (props) => {
         onSortDesc={sortDescending}
         onInput={filterArray}
         onSelect={setContactsPerPage}
-        active={activeContacts}
-        onChangePage={setCurrentPage}
       />
       <div>{contactsList}</div>
       <Pagination
