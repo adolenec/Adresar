@@ -54,8 +54,6 @@ const Contacts = (props) => {
   }
 
 
-
-
   const sortAscending = () => {
     const sortedContactsAscending = [...filteredContacts].sort(
       (contactA, contactB) => {
