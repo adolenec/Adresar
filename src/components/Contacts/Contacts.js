@@ -128,5 +128,4 @@ const Contacts = (props) => {
     </div>
   );
 };
-
 export default Contacts;
