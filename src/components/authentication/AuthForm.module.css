@@ -20,7 +20,7 @@
     position: absolute;
     z-index: 10;
     font-size: 4rem;
-    padding: 20px 0px;
+    padding: 20px 0;
     background: rgba(0, 0, 0, .4);
     width: 100%;
     text-align: center;
@@ -73,14 +73,6 @@
 .btn-container button:hover{
     cursor: pointer;
     background: rgb(228, 106, 7);
-}
-
-
-.btn-container button:disabled,
-.btn-container button:hover:disabled{
-    background-color: #cccccc;
-    color: #666666;
-    cursor: not-allowed;
 }
 
 .switchBtn{
