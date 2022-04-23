@@ -39,19 +39,11 @@ const AuthForm = () => {
   );
 
   //overall form validity
-  let formIsValid = false;
-
-  if(emailIsValid && passwordIsValid) {
-      formIsValid = true;
-  }
 
   const formSubmitHandler = e => {
       e.preventDefault();
 
-      if(!formIsValid){
-        if(!emailIsValid && !passwordIsValid){
-          setErrorMsg('Please enter valid input for all fields')
-        }
+      if(!emailIsValid && !passwordIsValid){
           return;
       }
 
@@ -92,6 +84,7 @@ const AuthForm = () => {
           //here save token in redux store later
           history.replace('/adresar') 
       }).catch(errorMsg => {
+        console.log(errorMsg);
           setErrorMsg(errorMsg.message);
       })
 
@@ -117,6 +110,7 @@ const AuthForm = () => {
           <div className={classes["form-control"]}>
             <label htmlFor="email">Email</label>
             <input
+              required
               type="email"
               id="email"
               onChange={emailChangeHandler}
@@ -128,6 +122,7 @@ const AuthForm = () => {
           <div className={classes["form-control"]}>
             <label htmlFor="password">Password</label>
             <input
+              required
               type="password"
               id="password"
               onChange={passwordChangeHandler}
