@@ -2,6 +2,8 @@ import { useState } from "react";
 import classes from "./AuthForm.module.css";
 import addressBg from "../../assets/addressBook.webp";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authActions } from '../store/auth'
 
 import useInput from "../../hooks/useInput";
 
