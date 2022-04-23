@@ -5,11 +5,12 @@ import { useHistory } from 'react-router-dom';
 
 import useInput from "../../hooks/useInput";
 
-const AuthForm = (props) => {
+const AuthForm = () => {
     const [errorMsg, setErrorMsg] = useState('');
     const [isLogin, setIsLogin] = useState(true);
     const history = useHistory();
 
+    const validEmailFormat = /^\S+@\S+\.\S{2}/
   //email
   const {
     value: enteredEmail,
@@ -18,7 +19,7 @@ const AuthForm = (props) => {
     inputChangeHandler: emailChangeHandler,
     inputBlurHandler: emailBlurHandler,
     resetInputs: resetEmailInput
-  } = useInput((value) => value.includes("@"));
+  } = useInput((value) => value.match(validEmailFormat));
 
   //password
   let specialChars = /[!#$+-]/;
@@ -48,17 +49,16 @@ const AuthForm = (props) => {
       e.preventDefault();
 
       if(!formIsValid){
+        if(!emailIsValid && !passwordIsValid){
+          setErrorMsg('Please enter valid input for all fields')
+        }
           return;
       }
 
-      let url;
       let msg;
 
-      if(isLogin) {
-        url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAuPyU-vTstxsbdjpRKaEc9tGcU2WiwEFQ';
-      }else {
-        url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAuPyU-vTstxsbdjpRKaEc9tGcU2WiwEFQ';
-      }
+      const url = isLogin ? 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAuPyU-vTstxsbdjpRKaEc9tGcU2WiwEFQ' :  'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAuPyU-vTstxsbdjpRKaEc9tGcU2WiwEFQ';
+
       fetch(url, {
           method: 'POST',
           body: JSON.stringify({
@@ -71,17 +71,18 @@ const AuthForm = (props) => {
           }
       }).then(res => {
           if(res.ok){
-              return res.json().then(data=>{
+              return res.json().then(data => {
                   setErrorMsg('');
               });
           } else {
               return res.json().then(data => {
-                console.log(data);
-                if(data.error.message === 'INVALID_PASSWORD') {
+                if (data.error.message === 'INVALID_PASSWORD') {
                     msg = "Invalid password";
-                }else if(data.error.message === 'EMAIL_EXISTS'){
+                } else if (data.error.message === 'EMAIL_EXISTS'){
                     msg = "Email already exists";
-                }else{
+                } else if (data.error.message === 'INVALID_EMAIL'){
+                  msg = "Email is invalid!";
+                } else {
                     msg = "This e-mail does not exist";
                 }
                 throw new Error(msg);
@@ -101,6 +102,8 @@ const AuthForm = (props) => {
   const changeAuth = () => {
     setIsLogin((prevState) => !prevState);
     setErrorMsg('');
+    resetEmailInput();
+    resetPasswordInput();
   }
 
   return (
@@ -134,12 +137,12 @@ const AuthForm = (props) => {
             {passwordInputHasError && <p className={classes['error-msg']}>Password must be at least 6 characters long and contain at least one number and one special character</p>}
           </div>
           <div className={classes["btn-container"]}>
-            <button disabled={!formIsValid}>{isLogin ? 'Login' : 'Sign up'}</button>
+            <button>{isLogin ? 'Login' : 'Sign up'}</button>
           </div>
           <button type="button" className={classes["switchBtn"]} onClick={changeAuth}>
-            {isLogin ? 'Don\'t have an account? Sign up for free' : 'Already have an account? Login'}
+            {isLogin ? `Don't have an account? Sign up for free` : `Already have an account? Login`}
           </button>
-          <p className={classes['error-msg']}>{errorMsg}</p>
+          {errorMsg && <p className={classes['error-msg']}>{errorMsg}</p>}
         </form>
       </div>
     </section>
