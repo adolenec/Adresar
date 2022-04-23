@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+import { initializeApp } from "firebase/app";
+
+import { getDatabase, ref, set } from 'firebase/database';
 
 import ContactItem from "./ContactItem";
 import classes from "./Contacts.module.css";
@@ -7,14 +10,30 @@ import Pagination from "./Pagination";
 import { contactsActions } from "../store/contacts";
 import { useDispatch } from "react-redux";
 
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAuPyU-vTstxsbdjpRKaEc9tGcU2WiwEFQ",
+  authDomain: "adresar-ea8a7.firebaseapp.com",
+  databaseURL: "https://adresar-ea8a7-default-rtdb.firebaseio.com",
+  projectId: "adresar-ea8a7",
+  storageBucket: "adresar-ea8a7.appspot.com",
+  messagingSenderId: "421594675906",
+  appId: "1:421594675906:web:74d8125c31811481b6195b"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
 const Contacts = (props) => {
   const [contacts, setContacts] = useState([]);
   const [filteredContacts, setFilteredContacts] = useState([]);
   const [error, setError] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [contactsPerPage, setContactsPerPage] = useState(5);
+  const [rerender, setRerender] = useState(false);
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetch("https://adresar-ea8a7-default-rtdb.firebaseio.com/contacts.json")
@@ -47,7 +66,7 @@ const Contacts = (props) => {
       .catch((err) => {
         setError(err.message);
       });
-  }, [dispatch]);
+  }, [dispatch, rerender]);
 
   if(error){
     return <p>Something went wrong!</p>
@@ -101,6 +120,12 @@ const Contacts = (props) => {
     setCurrentPage(pageNumber);
   };
 
+  const removeContact = (id) => {
+    set(ref(database, `contacts/${id}`), null).then(()=>{
+      setRerender(!rerender);
+    })
+  }
+
   const contactsList = activeContacts.map((contact) => (
     <ContactItem
       key={contact.id}
@@ -108,6 +133,7 @@ const Contacts = (props) => {
       contact={contact.contact}
       name={contact.name}
       lastName={contact.lastName}
+      onRemove={removeContact}
     />
   ));
 

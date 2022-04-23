@@ -2,6 +2,8 @@ import classes from "./ContactItem.module.css";
 import { Link } from "react-router-dom";
 
 const ContactItem = (props) => {
+
+
   return (
     <div className={classes["contact-item"]}>
       <div className={classes["user-icon"]}>
@@ -16,6 +18,7 @@ const ContactItem = (props) => {
       <div className={classes['contact-actions']}>
           <button><i className="fa-solid fa-star fa-2x"></i></button>
           <button><i className="fa-solid fa-pencil fa-2x" ></i></button>
+          <button onClick={() => {props.onRemove(props.id)}}><i className="fa-solid fa-trash fa-2x"></i></button>
       </div>
     </div>
   );
