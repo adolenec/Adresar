@@ -70,9 +70,7 @@ const AuthForm = () => {
     })
       .then((res) => {
         if (res.ok) {
-          return res.json().then((data) => {
-            setErrorMsg("");
-          });
+          return res.json();
         } else {
           return res.json().then((data) => {
             if (data.error.message === "INVALID_PASSWORD") {
