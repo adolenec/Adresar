@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { initializeApp } from "firebase/app";
 
-import { getDatabase, ref, set } from 'firebase/database';
+import { getDatabase, ref, set } from "firebase/database";
 
 import ContactItem from "./ContactItem";
 import classes from "./Contacts.module.css";
@@ -10,6 +10,7 @@ import Pagination from "./Pagination";
 import { contactsActions } from "../store/contacts";
 import { useDispatch } from "react-redux";
 
+import DeleteModal from "./DeleteModal";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAuPyU-vTstxsbdjpRKaEc9tGcU2WiwEFQ",
@@ -18,14 +19,14 @@ const firebaseConfig = {
   projectId: "adresar-ea8a7",
   storageBucket: "adresar-ea8a7.appspot.com",
   messagingSenderId: "421594675906",
-  appId: "1:421594675906:web:74d8125c31811481b6195b"
+  appId: "1:421594675906:web:74d8125c31811481b6195b",
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-const Contacts = (props) => {
+const Contacts = () => {
   const [contacts, setContacts] = useState([]);
   const [filteredContacts, setFilteredContacts] = useState([]);
   const [error, setError] = useState("");
@@ -68,10 +69,9 @@ const Contacts = (props) => {
       });
   }, [dispatch, rerender]);
 
-  if(error){
-    return <p>Something went wrong!</p>
+  if (error) {
+    return <p>Something went wrong!</p>;
   }
-
 
   const sortAscending = () => {
     const sortedContactsAscending = [...filteredContacts].sort(
@@ -121,10 +121,10 @@ const Contacts = (props) => {
   };
 
   const removeContact = (id) => {
-    set(ref(database, `contacts/${id}`), null).then(()=>{
+    set(ref(database, `contacts/${id}`), null).then(() => {
       setRerender(!rerender);
-    })
-  }
+    });
+  };
 
   const contactsList = activeContacts.map((contact) => (
     <ContactItem
@@ -138,20 +138,23 @@ const Contacts = (props) => {
   ));
 
   return (
-    <div className={classes["contacts-container"]}>
-      <ContactsHeader
-        onSortAsc={sortAscending}
-        onSortDesc={sortDescending}
-        onInput={filterArray}
-        onSelect={setContactsPerPage}
-      />
-      <div>{contactsList}</div>
-      <Pagination
-        contactsPerPage={contactsPerPage}
-        totalContacts={filteredContacts.length}
-        onActivePage={activePage}
-      />
-    </div>
+    <Fragment>
+      <div className={classes["contacts-container"]}>
+        <ContactsHeader
+          onSortAsc={sortAscending}
+          onSortDesc={sortDescending}
+          onInput={filterArray}
+          onSelect={setContactsPerPage}
+        />
+        <div>{contactsList}</div>
+        <Pagination
+          contactsPerPage={contactsPerPage}
+          totalContacts={filteredContacts.length}
+          onActivePage={activePage}
+        />
+      </div>
+      <DeleteModal />
+    </Fragment>
   );
 };
 export default Contacts;
