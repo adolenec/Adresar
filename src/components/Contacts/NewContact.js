@@ -1,7 +1,10 @@
 import classes from "./NewContact.module.css";
 import useInput from "../../hooks/useInput";
+import { useState } from "react";
 
 const NewContact = () => {
+  const [errorMsg, setErrorMsg] = useState(null);
+
   //name
   const {
     value: enteredName,
@@ -44,33 +47,32 @@ const NewContact = () => {
     resetInputs: resetEnteredContactTypeHandler,
   } = useInput((value) => value.trim() !== "");
 
-  const hasNumber = /\d/;
-
   //contact
+  const hasNumber = /\d/;
+  const validEmailFormat = /^\S+@\S+\.\S{2}/;
 
   const {
     value: enteredContactValue,
     inputChangeHandler: enteredContactValueHandler,
     isValid: enteredContactValueIsValid,
+    hasError: enteredContactHasError,
     resetInputs: resetEnteredContactValueHandler,
-  } = useInput((value) => hasNumber.test(value) || value.includes("@"));
+    inputBlurHandler: ContactChangeBlurHandler,
+  } = useInput(
+    (value) => (hasNumber.test(value) && value.length > 5) || value.match(validEmailFormat)
+  );
 
-  //overall form validity
-  let formIsValid = false;
-  if (
-    LastNameIsValid &&
-    nameIsValid &&
-    enteredDateIsValid &&
-    enteredContactTypeIsValid &&
-    enteredContactValueIsValid
-  ) {
-    formIsValid = true;
-  }
-
-  const formSubmitHandler = e => {
+  const formSubmitHandler = (e) => {
     e.preventDefault();
 
-    if (!formIsValid) {
+    if (
+      !LastNameIsValid ||
+      !nameIsValid ||
+      !enteredDateIsValid ||
+      !enteredContactTypeIsValid ||
+      !enteredContactValueIsValid
+    ) {
+      setErrorMsg("All input fields must be valid!");
       return;
     }
 
@@ -86,7 +88,7 @@ const NewContact = () => {
       method: "POST",
       body: JSON.stringify({
         contact: newContactData,
-      })
+      }),
     });
 
     //reset inputs
@@ -104,7 +106,7 @@ const NewContact = () => {
       ? "tel"
       : enteredContactType === "Email"
       ? "email"
-      : "text";
+      : "number";
 
   return (
     <section className={classes["add-contact-form"]}>
@@ -181,11 +183,20 @@ const NewContact = () => {
               type={contactTypeInput}
               value={enteredContactValue}
               onChange={enteredContactValueHandler}
+              onBlur={ContactChangeBlurHandler}
             />
+            {enteredContactHasError && (
+              <p className={classes["error-msg"]}>
+                Please enter a valid contact
+              </p>
+            )}
           </div>
         )}
         <div className={classes["submit-btn"]}>
-          <button disabled={!formIsValid}>Add New Contact</button>
+          <button>Add New Contact</button>
+        </div>
+        <div className={classes["form-control"]}>
+          {errorMsg && <p className={classes["error-msg"]}>{errorMsg}</p>}
         </div>
       </form>
     </section>
