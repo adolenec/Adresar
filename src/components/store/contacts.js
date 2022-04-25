@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {contactsData : []}
+const initialState = {contactsData : [], deleteItemId: null}
 
 const contactsSlice = createSlice({
     name: 'contacts',
@@ -8,6 +8,9 @@ const contactsSlice = createSlice({
     reducers: {
         setContacts(state, action){
             state.contactsData = action.payload;
+        },
+        setDeleteItemId(state,action){
+            state.deleteItemId = action.payload;
         }
     }
 })

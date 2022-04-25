@@ -33,6 +33,7 @@ const Contacts = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [contactsPerPage, setContactsPerPage] = useState(5);
   const [rerender, setRerender] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -126,6 +127,8 @@ const Contacts = () => {
     });
   };
 
+
+
   const contactsList = activeContacts.map((contact) => (
     <ContactItem
       key={contact.id}
@@ -133,7 +136,7 @@ const Contacts = () => {
       contact={contact.contact}
       name={contact.name}
       lastName={contact.lastName}
-      onRemove={removeContact}
+      onShowDeleteModal = {setShowDeleteModal}
     />
   ));
 
@@ -153,7 +156,7 @@ const Contacts = () => {
           onActivePage={activePage}
         />
       </div>
-      <DeleteModal />
+      {showDeleteModal && <DeleteModal onShowModal={setShowDeleteModal} onRemove={removeContact} />}
     </Fragment>
   );
 };
