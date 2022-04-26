@@ -6,9 +6,9 @@ import { useDispatch } from "react-redux";
 const ContactItem = (props) => {
   const dispatch = useDispatch();
 
-  const deletedItemId = () => {
+  const selectedItemId = () => {
     props.onShowDeleteModal(true);
-    dispatch(contactsActions.setDeleteItemId(props.id));
+    dispatch(contactsActions.setSelectedItemId(props.id));
   };
 
   return (
@@ -31,7 +31,7 @@ const ContactItem = (props) => {
         <button>
           <i className="fa-solid fa-pencil fa-2x"></i>
         </button>
-        <button onClick={deletedItemId}>
+        <button onClick={selectedItemId}>
           <i className="fa-solid fa-trash fa-2x"></i>
         </button>
       </div>

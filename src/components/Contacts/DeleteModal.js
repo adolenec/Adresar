@@ -15,7 +15,7 @@ const Backdrop = (props) => {
 };
 
 const Overlay = (props) => {
-  const deleteId = useSelector((state) => state.contacts.deleteItemId);
+  const deleteId = useSelector((state) => state.contacts.selectedItemId);
 
   const deleteContact = () => {
     props.onRemove(deleteId);

@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {contactsData : [], deleteItemId: null}
+const initialState = {contactsData : [], selectedItemId: null}
 
 const contactsSlice = createSlice({
     name: 'contacts',
@@ -9,8 +9,8 @@ const contactsSlice = createSlice({
         setContacts(state, action){
             state.contactsData = action.payload;
         },
-        setDeleteItemId(state,action){
-            state.deleteItemId = action.payload;
+        setSelectedItemId(state,action){
+            state.selectedItemId = action.payload;
         }
     }
 })

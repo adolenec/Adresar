@@ -46,3 +46,7 @@ a{
 .contact-actions button i{
     color: #ccc;
 }
+
+.contact-actions button i:hover{
+    color: rgb(109, 104, 104);
+}
