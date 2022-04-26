@@ -6,10 +6,24 @@ import { useDispatch } from "react-redux";
 const ContactItem = (props) => {
   const dispatch = useDispatch();
 
-  const selectedItemId = () => {
-    props.onShowDeleteModal(true);
-    dispatch(contactsActions.setSelectedItemId(props.id));
+  const selectedContact = () => {
+    const selectedItemData = {
+      id: props.id,
+      name: props.name,
+      lastName: props.lastName,
+      contactType: props.contactType,
+      contact: props.contact,
+    };
+
+    console.log(selectedItemData);
+
+    dispatch(contactsActions.setSelectedContact(selectedItemData));
   };
+
+  const showEditModal = () => {
+    props.onShowEditModal(true);
+    dispatch(contactsActions.setIsEditingContact(true))
+  }
 
   return (
     <div className={classes["contact-item"]}>
@@ -28,10 +42,15 @@ const ContactItem = (props) => {
         <button>
           <i className="fa-solid fa-star fa-2x"></i>
         </button>
-        <button>
+        <button onClick={()=>{selectedContact(); showEditModal()}}>
           <i className="fa-solid fa-pencil fa-2x"></i>
         </button>
-        <button onClick={selectedItemId}>
+        <button
+          onClick={() => {
+            selectedContact();
+            props.onShowDeleteModal(true);
+          }}
+        >
           <i className="fa-solid fa-trash fa-2x"></i>
         </button>
       </div>

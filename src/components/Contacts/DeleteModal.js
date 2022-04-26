@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { Fragment } from "react";
 import { useSelector } from "react-redux";
 
-const Backdrop = (props) => {
+export const Backdrop = (props) => {
   return (
     <div
       className={classes.backdrop}
@@ -15,27 +15,33 @@ const Backdrop = (props) => {
 };
 
 const Overlay = (props) => {
-  const deleteId = useSelector((state) => state.contacts.selectedItemId);
+  const selectedContact = useSelector(
+    (state) => state.contacts.selectedContact
+  );
 
   const deleteContact = () => {
-    props.onRemove(deleteId);
+    props.onRemove(selectedContact.id);
     props.onShowModal(false);
   };
 
-  const onCloseModal = () => {
+  const closeModal = () => {
     props.onShowModal(false);
   };
 
   return (
     <div className={classes.modal}>
       <div className={classes.header}>
-        <h2>Delete Contact</h2>
+        <h2>
+          Delete Contact - {selectedContact.name} {selectedContact.lastName}
+        </h2>
+        <button onClick={closeModal}>
+          <i className="fa-solid fa-close fa-2x"></i>
+        </button>
       </div>
       <div className={classes.content}>
         <p>Are you sure you want to delete this contact?</p>
       </div>
       <div className={classes.actions}>
-        <button onClick={onCloseModal}>Close</button>
         <button onClick={deleteContact}>Delete Contact</button>
       </div>
     </div>

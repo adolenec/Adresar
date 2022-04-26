@@ -3,14 +3,17 @@ import { initializeApp } from "firebase/app";
 
 import { getDatabase, ref, set } from "firebase/database";
 
-import ContactItem from "./ContactItem";
 import classes from "./Contacts.module.css";
+import ContactItem from "./ContactItem";
 import ContactsHeader from "./ContactsHeader";
 import Pagination from "./Pagination";
+import DeleteModal from "./DeleteModal";
+import EditModal from "./EditModal";
+
 import { contactsActions } from "../store/contacts";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
-import DeleteModal from "./DeleteModal";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAuPyU-vTstxsbdjpRKaEc9tGcU2WiwEFQ",
@@ -24,7 +27,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
+export const database = getDatabase(app);
 
 const Contacts = () => {
   const [contacts, setContacts] = useState([]);
@@ -32,8 +35,10 @@ const Contacts = () => {
   const [error, setError] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [contactsPerPage, setContactsPerPage] = useState(5);
-  const [rerender, setRerender] = useState(false);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+
+  const rerender = useSelector((state) => state.contacts.rerender);
 
   const dispatch = useDispatch();
 
@@ -123,7 +128,7 @@ const Contacts = () => {
 
   const removeContact = (id) => {
     set(ref(database, `contacts/${id}`), null).then(() => {
-      setRerender(!rerender);
+      dispatch(contactsActions.rerender());
     });
   };
 
@@ -134,9 +139,11 @@ const Contacts = () => {
       key={contact.id}
       id={contact.id}
       contact={contact.contact}
+      contactType={contact.contactType}
       name={contact.name}
       lastName={contact.lastName}
       onShowDeleteModal = {setShowDeleteModal}
+      onShowEditModal = {setShowEditModal}
     />
   ));
 
@@ -157,6 +164,7 @@ const Contacts = () => {
         />
       </div>
       {showDeleteModal && <DeleteModal onShowModal={setShowDeleteModal} onRemove={removeContact} />}
+      {showEditModal && <EditModal onShowModal={setShowEditModal}/>}
     </Fragment>
   );
 };
