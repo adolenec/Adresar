@@ -106,48 +106,47 @@ const NewContact = () => {
     });
 
     history.push("/adresar");
-
   };
 
-  let contactTypeInput;
   let contactTypeLabel;
 
   switch (enteredContactType) {
-    case "mobilePhone":
-      contactTypeInput = "phone";
+    case "phone":
       contactTypeLabel = "Mobile Phone";
       break;
-    case "telephone":
-      contactTypeInput = "tel";
+    case "tel":
       contactTypeLabel = "Telephone";
       break;
     case "email":
-      contactTypeInput = "email";
       contactTypeLabel = "Email";
       break;
     default:
-      contactTypeInput = "number";
       contactTypeLabel = "Pager";
   }
 
   const options = [
     {
-      value: 'mobilePhone',
-      label: 'Mobile Phone',
+      value: "",
+      label: "Choose Contact Type",
+      disabled: true,
     },
     {
-      value: 'telephone',
-      label: 'Telephone',
+      value: "phone",
+      label: "Mobile Phone",
     },
     {
-      value: 'email',
-      label: 'Email',
+      value: "tel",
+      label: "Telephone",
     },
     {
-      value: 'pager',
-      label: 'Pager',
+      value: "email",
+      label: "Email",
     },
-  ]
+    {
+      value: "number",
+      label: "Pager",
+    },
+  ];
 
   return (
     <section className={classes["add-contact-form"]}>
@@ -208,13 +207,18 @@ const NewContact = () => {
             onChange={enteredContactTypeHandler}
           >
             {options.map((option) => (
-              <option key={option.value} value={option.value}>{option.label}</option>
+              <option
+                key={option.value}
+                disabled={option.disabled}
+                value={option.value}
+              >
+                {option.label}
+              </option>
             ))}
           </select>
         </div>
         {enteredContactType && (
           <ContactTypeInput
-            contactTypeInput={contactTypeInput}
             contactTypeLabel={contactTypeLabel}
             enteredContactType={enteredContactType}
             enteredContactValue={enteredContactValue}

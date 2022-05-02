@@ -3,10 +3,10 @@ import classes from "./ContactTypeInput.module.css";
 const ContactTypeInput = (props) => {
   return (
     <div className={classes["form-control"]}>
-      <label htmlFor={props.contactTypeInput}>{props.contactTypeLabel}</label>
+      <label htmlFor={props.enteredContactType}>{props.contactTypeLabel}</label>
       <input
-        id={props.contactTypeInput}
-        type={props.contactTypeInput}
+        id={props.enteredContactType}
+        type={props.enteredContactType}
         value={props.enteredContactValue}
         onChange={props.enteredContactValueHandler}
         onBlur={props.contactChangeBlurHandler}
