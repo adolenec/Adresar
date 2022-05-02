@@ -2,22 +2,12 @@ import classes from "./ContactTypeInput.module.css";
 
 const ContactTypeInput = (props) => {
 
-
-    // const getSelectedContactType = (value) => {
-    //     return props.options.find(option => option.value === value);
-    //   }
-    
-    //   console.log(getSelectedContactType(props.enteredContactType));
-
-    console.log(props.option);
-
   return (
     <div className={classes["form-control"]}>
-      <label htmlFor={props.enteredContactType}>{props.option.label}</label>
+      <label htmlFor={props.option.value}>{props.option.label}</label>
       <input
-        id={props.enteredContactType}
-        type={props.enteredContactType}
-        value={props.enteredContactValue}
+        id={props.option.value}
+        type={props.option.value}
         onChange={props.enteredContactValueHandler}
         onBlur={props.contactChangeBlurHandler}
       />
