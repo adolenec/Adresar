@@ -1,16 +1,16 @@
 import { Route, Switch, Redirect } from "react-router-dom";
-import { Fragment } from "react";
 
 import AuthenticationPage from "./pages/AuthenticationPage";
 import NewContactPage from "./pages/NewContactPage";
-import Layout from "./components/layout/Layout";
 import { useSelector } from "react-redux";
+import Navigation from "./components/layout/Navigation";
 
 function App() {
   const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);
 
   return (
-    <Fragment>
+    <>
+      {isAuthenticated && <Navigation />}
       <Switch>
         {!isAuthenticated && (
           <Route path="/" exact>
@@ -18,15 +18,11 @@ function App() {
           </Route>
         )}
         {!isAuthenticated && <Redirect to="/" exact />}
-        <Layout>
-          {isAuthenticated && (
-            <Route path="/kontakt">
-              <NewContactPage />
-            </Route>
-          )}
-        </Layout>
+        <Route path="/kontakt">
+          <NewContactPage />
+        </Route>
       </Switch>
-    </Fragment>
+    </>
   );
 }
 
