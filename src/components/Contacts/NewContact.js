@@ -2,6 +2,7 @@ import classes from "./NewContact.module.css";
 import useInput from "../../hooks/useInput";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import ContactTypeInput from "./ContactTypeInput";
 
 const NewContact = () => {
   const [errorMsg, setErrorMsg] = useState(null);
@@ -193,21 +194,29 @@ const NewContact = () => {
           </select>
         </div>
         {enteredContactType && (
-          <div className={classes["form-control"]}>
-            <label htmlFor={contactTypeInput}>{enteredContactType}</label>
-            <input
-              id={contactTypeInput}
-              type={contactTypeInput}
-              value={enteredContactValue}
-              onChange={enteredContactValueHandler}
-              onBlur={contactChangeBlurHandler}
-            />
-            {enteredContactHasError && (
-              <p className={classes["error-msg"]}>
-                Please enter a valid contact
-              </p>
-            )}
-          </div>
+          <ContactTypeInput
+            contactTypeInput={contactTypeInput}
+            enteredContactType={enteredContactType}
+            enteredContactValue={enteredContactValue}
+            enteredContactValueHandler={enteredContactValueHandler}
+            contactChangeBlurHandler={contactChangeBlurHandler}
+            enteredContactHasError={enteredContactHasError}
+          />
+          // <div className={classes["form-control"]}>
+          //   <label htmlFor={contactTypeInput}>{enteredContactType}</label>
+          //   <input
+          //     id={contactTypeInput}
+          //     type={contactTypeInput}
+          //     value={enteredContactValue}
+          //     onChange={enteredContactValueHandler}
+          //     onBlur={contactChangeBlurHandler}
+          //   />
+          //   {enteredContactHasError && (
+          //     <p className={classes["error-msg"]}>
+          //       Please enter a valid contact
+          //     </p>
+          //   )}
+          // </div>
         )}
         <div className={classes["submit-btn"]}>
           <button>Add New Contact</button>
