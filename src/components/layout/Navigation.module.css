@@ -1,73 +1,74 @@
 .header {
-    width: 100%;
-    height: 5rem;
-    border-bottom-right-radius: 10px;
-    border-bottom-left-radius: 10px;
-    background-color:  rgb(231, 89, 37);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 10%;
-    color: rgb(34, 34, 34);
+  width: 100%;
+  height: 5rem;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  background-color: rgb(231, 89, 37);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10%;
+  color: rgb(34, 34, 34);
 }
 
 .header a {
-    padding: .5rem;
-    text-decoration: none;
-    font-weight: bold;
-    color: rgb(34, 34, 34);
-  }
+  padding: 0.5rem;
+  text-decoration: none;
+  font-weight: bold;
+  color: rgb(34, 34, 34);
+}
 
 .header a:hover,
-.header a.active{
-    border-bottom: 4px solid rgb(34, 34, 34);
+.header a.active {
+  border-bottom: 4px solid rgb(34, 34, 34);
 }
 
-
-.header h1{
-    font-size: 2rem;
+.header h1 {
+  font-size: 2rem;
 }
 
-.header ul{
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    gap: 2rem;
-    align-items: center;
+.header ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 2rem;
+  align-items: center;
 }
 
-i{
-    padding: .3rem;
+i {
+  padding: 0.3rem;
 }
 
-input[type="search"]{
-    padding: .5rem;
-    display: block;
-    border: 1px solid rgb(34, 34, 34);
-    border-radius: 20px;
-    width: 15rem;
-    background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E") no-repeat 13.5rem center;
+input[type="search"] {
+  padding: 0.5rem;
+  display: block;
+  border: 1px solid rgb(34, 34, 34);
+  border-radius: 20px;
+  width: 15rem;
+  background: white
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z'%3E%3C/path%3E%3C/svg%3E")
+    no-repeat 13.5rem center;
 }
 
-input[type="search"]::placeholder{
-    color: black;
+input[type="search"]::placeholder {
+  color: black;
 }
 
-.logout-btn{
-    padding: .3rem .8rem;
-    font-size: 1.3rem;
-    font-weight: bold;
-    background: none;
-    border: none;
-    border: 2px solid rgb(230, 229, 229);
-    color: rgb(230, 229, 229);
-    border-radius: 10px;
+.logout-btn {
+  padding: 0.3rem 0.8rem;
+  font-size: 1.3rem;
+  font-weight: bold;
+  background: none;
+  border: none;
+  border: 2px solid rgb(230, 229, 229);
+  color: rgb(230, 229, 229);
+  border-radius: 10px;
 }
 
-.logout-btn:hover{
-    background: rgb(192, 57, 57);
-    border: 2px solid white;
-    color: white;
-    cursor: pointer;
+.logout-btn:hover {
+  background: rgb(192, 57, 57);
+  border: 2px solid white;
+  color: white;
+  cursor: pointer;
 }

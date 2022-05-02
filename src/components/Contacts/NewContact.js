@@ -1,9 +1,12 @@
 import classes from "./NewContact.module.css";
 import useInput from "../../hooks/useInput";
 import { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 const NewContact = () => {
   const [errorMsg, setErrorMsg] = useState(null);
+  const history = useHistory();
+  let today = new Date().toISOString().slice(0, 10);
 
   //name
   const {
@@ -97,6 +100,8 @@ const NewContact = () => {
     resetEnteredDateHandler("");
     resetEnteredContactTypeHandler("");
     resetEnteredContactValueHandler("");
+
+    history.push('/adresar');
   };
 
   const contactTypeInput =
@@ -152,7 +157,7 @@ const NewContact = () => {
             type="date"
             id="date"
             min="1950-01-01"
-            max="2011-12-31"
+            max={today}
           />
           {enteredDateHasError && (
             <p className={classes["error-msg"]}>Please enter Date of Birth</p>
