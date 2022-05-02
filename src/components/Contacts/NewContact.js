@@ -25,8 +25,8 @@ const NewContact = () => {
     value: enteredLastName,
     isValid: LastNameIsValid,
     hasError: LastNameInputHasError,
-    inputChangeHandler: LastNameChangeHandler,
-    inputBlurHandler: LastNameBlurChangeHandler,
+    inputChangeHandler: lastNameChangeHandler,
+    inputBlurHandler: lastNameBlurChangeHandler,
     resetInputs: resetLastNameHandler,
   } = useInput(
     (value) => value.trim().length > 2 && value.trim().length <= 300
@@ -37,8 +37,8 @@ const NewContact = () => {
     value: enteredDate,
     isValid: enteredDateIsValid,
     hasError: enteredDateHasError,
-    inputChangeHandler: DateChangeHandler,
-    inputBlurHandler: DateChangeBlurHandler,
+    inputChangeHandler: dateChangeHandler,
+    inputBlurHandler: dateChangeBlurHandler,
     resetInputs: resetEnteredDateHandler,
   } = useInput((value) => value.trim() !== "");
 
@@ -60,10 +60,20 @@ const NewContact = () => {
     isValid: enteredContactValueIsValid,
     hasError: enteredContactHasError,
     resetInputs: resetEnteredContactValueHandler,
-    inputBlurHandler: ContactChangeBlurHandler,
+    inputBlurHandler: contactChangeBlurHandler,
   } = useInput(
-    (value) => (hasNumber.test(value) && value.length > 5) || value.match(validEmailFormat)
+    (value) =>
+      (hasNumber.test(value) && value.length > 5) ||
+      value.match(validEmailFormat)
   );
+
+  const resetInputs = () => {
+    resetNameHandler("");
+    resetLastNameHandler("");
+    resetEnteredDateHandler("");
+    resetEnteredContactTypeHandler("");
+    resetEnteredContactValueHandler("");
+  };
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
@@ -94,24 +104,26 @@ const NewContact = () => {
       }),
     });
 
-    //reset inputs
-    resetNameHandler("");
-    resetLastNameHandler("");
-    resetEnteredDateHandler("");
-    resetEnteredContactTypeHandler("");
-    resetEnteredContactValueHandler("");
+    history.push("/adresar");
 
-    history.push('/adresar');
+    resetInputs();
   };
 
-  const contactTypeInput =
-    enteredContactType === "Mobile Phone"
-      ? "phone"
-      : enteredContactType === "Telephone"
-      ? "tel"
-      : enteredContactType === "Email"
-      ? "email"
-      : "number";
+  let contactTypeInput;
+
+  switch (enteredContactType) {
+    case "Mobile Phone":
+      contactTypeInput = "phone";
+      break;
+    case "Telephone":
+      contactTypeInput = "tel";
+      break;
+    case "Email":
+      contactTypeInput = "email";
+      break;
+    default:
+      contactTypeInput = "number";
+  }
 
   return (
     <section className={classes["add-contact-form"]}>
@@ -139,8 +151,8 @@ const NewContact = () => {
             type="text"
             id="lastName"
             value={enteredLastName}
-            onChange={LastNameChangeHandler}
-            onBlur={LastNameBlurChangeHandler}
+            onChange={lastNameChangeHandler}
+            onBlur={lastNameBlurChangeHandler}
           />
           {LastNameInputHasError && (
             <p className={classes["error-msg"]}>
@@ -152,11 +164,11 @@ const NewContact = () => {
           <label htmlFor="date">Date of Birth</label>
           <input
             value={enteredDate}
-            onChange={DateChangeHandler}
-            onBlur={DateChangeBlurHandler}
+            onChange={dateChangeHandler}
+            onBlur={dateChangeBlurHandler}
             type="date"
             id="date"
-            min="1950-01-01"
+            min="1905-01-01"
             max={today}
           />
           {enteredDateHasError && (
@@ -188,7 +200,7 @@ const NewContact = () => {
               type={contactTypeInput}
               value={enteredContactValue}
               onChange={enteredContactValueHandler}
-              onBlur={ContactChangeBlurHandler}
+              onBlur={contactChangeBlurHandler}
             />
             {enteredContactHasError && (
               <p className={classes["error-msg"]}>
