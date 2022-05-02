@@ -1,17 +1,17 @@
 import classes from "./ContactTypeInput.module.css";
 
-const ContactTypeInput = (props) => {
+const ContactTypeInput = ({option, enteredContactValueHandler, contactChangeBlurHandler, enteredContactHasError}) => {
 
   return (
     <div className={classes["form-control"]}>
-      <label htmlFor={props.option.value}>{props.option.label}</label>
+      <label htmlFor={option.value}>{option.label}</label>
       <input
-        id={props.option.value}
-        type={props.option.value}
-        onChange={props.enteredContactValueHandler}
-        onBlur={props.contactChangeBlurHandler}
+        id={option.value}
+        type={option.value}
+        onChange={enteredContactValueHandler}
+        onBlur={contactChangeBlurHandler}
       />
-      {props.enteredContactHasError && (
+      {enteredContactHasError && (
         <p className={classes["error-msg"]}>Please enter a valid contact</p>
       )}
     </div>
