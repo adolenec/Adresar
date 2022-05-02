@@ -3,7 +3,7 @@ import classes from "./ContactTypeInput.module.css";
 const ContactTypeInput = (props) => {
   return (
     <div className={classes["form-control"]}>
-      <label htmlFor={props.contactTypeInput}>{props.enteredContactType}</label>
+      <label htmlFor={props.contactTypeInput}>{props.contactTypeLabel}</label>
       <input
         id={props.contactTypeInput}
         type={props.contactTypeInput}

@@ -107,24 +107,47 @@ const NewContact = () => {
 
     history.push("/adresar");
 
-    resetInputs();
   };
 
   let contactTypeInput;
+  let contactTypeLabel;
 
   switch (enteredContactType) {
-    case "Mobile Phone":
+    case "mobilePhone":
       contactTypeInput = "phone";
+      contactTypeLabel = "Mobile Phone";
       break;
-    case "Telephone":
+    case "telephone":
       contactTypeInput = "tel";
+      contactTypeLabel = "Telephone";
       break;
-    case "Email":
+    case "email":
       contactTypeInput = "email";
+      contactTypeLabel = "Email";
       break;
     default:
       contactTypeInput = "number";
+      contactTypeLabel = "Pager";
   }
+
+  const options = [
+    {
+      value: 'mobilePhone',
+      label: 'Mobile Phone',
+    },
+    {
+      value: 'telephone',
+      label: 'Telephone',
+    },
+    {
+      value: 'email',
+      label: 'Email',
+    },
+    {
+      value: 'pager',
+      label: 'Pager',
+    },
+  ]
 
   return (
     <section className={classes["add-contact-form"]}>
@@ -184,39 +207,21 @@ const NewContact = () => {
             value={enteredContactType}
             onChange={enteredContactTypeHandler}
           >
-            <option value="" disabled>
-              Choose Contact Type
-            </option>
-            <option value="Mobile Phone">Mobile phone</option>
-            <option value="Telephone">Telephone</option>
-            <option value="Email">Email</option>
-            <option value="Pager">Pager</option>
+            {options.map((option) => (
+              <option key={option.value} value={option.value}>{option.label}</option>
+            ))}
           </select>
         </div>
         {enteredContactType && (
           <ContactTypeInput
             contactTypeInput={contactTypeInput}
+            contactTypeLabel={contactTypeLabel}
             enteredContactType={enteredContactType}
             enteredContactValue={enteredContactValue}
             enteredContactValueHandler={enteredContactValueHandler}
             contactChangeBlurHandler={contactChangeBlurHandler}
             enteredContactHasError={enteredContactHasError}
           />
-          // <div className={classes["form-control"]}>
-          //   <label htmlFor={contactTypeInput}>{enteredContactType}</label>
-          //   <input
-          //     id={contactTypeInput}
-          //     type={contactTypeInput}
-          //     value={enteredContactValue}
-          //     onChange={enteredContactValueHandler}
-          //     onBlur={contactChangeBlurHandler}
-          //   />
-          //   {enteredContactHasError && (
-          //     <p className={classes["error-msg"]}>
-          //       Please enter a valid contact
-          //     </p>
-          //   )}
-          // </div>
         )}
         <div className={classes["submit-btn"]}>
           <button>Add New Contact</button>
