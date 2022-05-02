@@ -108,22 +108,6 @@ const NewContact = () => {
     history.push("/adresar");
   };
 
-  let contactTypeLabel;
-
-  switch (enteredContactType) {
-    case "phone":
-      contactTypeLabel = "Mobile Phone";
-      break;
-    case "tel":
-      contactTypeLabel = "Telephone";
-      break;
-    case "email":
-      contactTypeLabel = "Email";
-      break;
-    default:
-      contactTypeLabel = "Pager";
-  }
-
   const options = [
     {
       value: "",
@@ -147,6 +131,12 @@ const NewContact = () => {
       label: "Pager",
     },
   ];
+
+
+
+   const selectedOption = options.find(option => option.value === enteredContactType);
+
+
 
   return (
     <section className={classes["add-contact-form"]}>
@@ -219,9 +209,7 @@ const NewContact = () => {
         </div>
         {enteredContactType && (
           <ContactTypeInput
-            contactTypeLabel={contactTypeLabel}
-            enteredContactType={enteredContactType}
-            enteredContactValue={enteredContactValue}
+            option={selectedOption}
             enteredContactValueHandler={enteredContactValueHandler}
             contactChangeBlurHandler={contactChangeBlurHandler}
             enteredContactHasError={enteredContactHasError}
