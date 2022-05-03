@@ -1,17 +1,28 @@
-import { Route, Switch } from "react-router-dom";
-import { Fragment } from "react";
+import { Route, Switch, Redirect } from "react-router-dom";
 
 import AuthenticationPage from "./pages/AuthenticationPage";
+import NewContactPage from "./pages/NewContactPage";
+import { useSelector } from "react-redux";
+import Navigation from "./components/layout/Navigation";
 
 function App() {
+  const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);
+
   return (
-    <Fragment>
+    <>
+      {isAuthenticated && <Navigation />}
       <Switch>
-        <Route path="/" exact>
-          <AuthenticationPage />
+        {!isAuthenticated && (
+          <Route path="/" exact>
+            <AuthenticationPage />
+          </Route>
+        )}
+        {!isAuthenticated && <Redirect to="/" exact />}
+        <Route path="/kontakt">
+          <NewContactPage />
         </Route>
       </Switch>
-    </Fragment>
+    </>
   );
 }
 

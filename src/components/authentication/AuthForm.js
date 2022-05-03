@@ -2,6 +2,8 @@ import { useState } from "react";
 import classes from "./AuthForm.module.css";
 import addressBg from "../../assets/addressBook.webp";
 import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { authActions } from '../store/auth'
 
 import useInput from "../../hooks/useInput";
 
@@ -10,7 +12,10 @@ const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const history = useHistory();
 
+  const dispatch = useDispatch();
+
   const validEmailFormat = /^\S+@\S+\.\S{2}/;
+
   //email
   const {
     value: enteredEmail,
@@ -51,6 +56,7 @@ const AuthForm = () => {
       ? "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAuPyU-vTstxsbdjpRKaEc9tGcU2WiwEFQ"
       : "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAuPyU-vTstxsbdjpRKaEc9tGcU2WiwEFQ";
 
+
     fetch(url, {
       method: "POST",
       body: JSON.stringify({
@@ -64,9 +70,7 @@ const AuthForm = () => {
     })
       .then((res) => {
         if (res.ok) {
-          return res.json().then((data) => {
-            setErrorMsg("");
-          });
+          return res.json();
         } else {
           return res.json().then((data) => {
             if (data.error.message === "INVALID_PASSWORD") {
@@ -83,7 +87,7 @@ const AuthForm = () => {
         }
       })
       .then((data) => {
-        //here save token in redux store later
+        dispatch(authActions.setToken(data.idToken));
         history.replace("/adresar");
       })
       .catch((errorMsg) => {
