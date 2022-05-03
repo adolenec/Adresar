@@ -12,9 +12,13 @@ const ContactItem = (props) => {
         </h3>
         <h3>{props.contact}</h3>
       </div>
-      <div className={classes['contact-actions']}>
-          <button><i className="fa-solid fa-star fa-2x"></i></button>
-          <button><i className="fa-solid fa-pencil fa-2x" ></i></button>
+      <div className={classes["contact-actions"]}>
+        <button>
+          <i className="fa-solid fa-star fa-2x"></i>
+        </button>
+        <button>
+          <i className="fa-solid fa-pencil fa-2x"></i>
+        </button>
       </div>
     </div>
   );

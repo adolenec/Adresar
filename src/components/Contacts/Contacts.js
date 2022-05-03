@@ -5,12 +5,12 @@ import classes from "./Contacts.module.css";
 import ContactsHeader from "./ContactsHeader";
 import Pagination from "./Pagination";
 
-const Contacts = (props) => {
+const Contacts = () => {
   const [contacts, setContacts] = useState([]);
   const [filteredContacts, setFilteredContacts] = useState([]);
   const [error, setError] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [contactsPerPage, setContactsPerPage] = useState(2);
+  const [contactsPerPage, setContactsPerPage] = useState(5);
 
   useEffect(() => {
     fetch("https://adresar-ea8a7-default-rtdb.firebaseio.com/contacts.json")
@@ -44,27 +44,29 @@ const Contacts = (props) => {
       });
   }, []);
 
-  const sortedContactsAscending = [...filteredContacts].sort(
-    (contactA, contactB) => {
-      return contactA.lastName.toLowerCase() > contactB.lastName.toLowerCase()
-        ? 1
-        : -1;
-    }
-  );
-
-  const sortedContactsDescending = [...filteredContacts].sort(
-    (contactA, contactB) => {
-      return contactA.lastName.toLowerCase() < contactB.lastName.toLowerCase()
-        ? 1
-        : -1;
-    }
-  );
+  if (error) {
+    return <p>Something went wrong!</p>;
+  }
 
   const sortAscending = () => {
+    const sortedContactsAscending = [...filteredContacts].sort(
+      (contactA, contactB) => {
+        return contactA.lastName.toLowerCase() > contactB.lastName.toLowerCase()
+          ? 1
+          : -1;
+      }
+    );
     setFilteredContacts(sortedContactsAscending);
   };
 
   const sortDescending = () => {
+    const sortedContactsDescending = [...filteredContacts].sort(
+      (contactA, contactB) => {
+        return contactA.lastName.toLowerCase() < contactB.lastName.toLowerCase()
+          ? 1
+          : -1;
+      }
+    );
     setFilteredContacts(sortedContactsDescending);
   };
 
@@ -83,11 +85,14 @@ const Contacts = (props) => {
 
   const LastContactIndex = currentPage * contactsPerPage;
   const FirstContactIndex = LastContactIndex - contactsPerPage;
-  const activeContacts = filteredContacts.slice(FirstContactIndex, LastContactIndex);
+  const activeContacts = filteredContacts.slice(
+    FirstContactIndex,
+    LastContactIndex
+  );
 
   const activePage = (pageNumber) => {
     setCurrentPage(pageNumber);
-  }
+  };
 
   const contactsList = activeContacts.map((contact) => (
     <ContactItem
@@ -105,11 +110,13 @@ const Contacts = (props) => {
         onSortDesc={sortDescending}
         onInput={filterArray}
         onSelect={setContactsPerPage}
-        active={activeContacts}
-        onChangePage={setCurrentPage}
       />
       <div>{contactsList}</div>
-      <Pagination contactsPerPage={contactsPerPage} totalContacts={filteredContacts.length} onActivePage={activePage}/>
+      <Pagination
+        contactsPerPage={contactsPerPage}
+        totalContacts={filteredContacts.length}
+        onActivePage={activePage}
+      />
     </div>
   );
 };

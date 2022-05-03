@@ -1,4 +1,4 @@
-import classes from './Pagination.module.css';
+import classes from "./Pagination.module.css";
 
 const Pagination = (props) => {
   const pageNumbers = [];
