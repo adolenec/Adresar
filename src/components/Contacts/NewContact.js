@@ -1,7 +1,13 @@
 import classes from "./NewContact.module.css";
 import useInput from "../../hooks/useInput";
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
+import ContactTypeInput from "./ContactTypeInput";
 
 const NewContact = () => {
+  const [errorMsg, setErrorMsg] = useState(null);
+  const history = useHistory();
+  let today = new Date().toISOString().slice(0, 10);
 
   //name
   const {
@@ -10,7 +16,6 @@ const NewContact = () => {
     hasError: nameInputHasError,
     inputChangeHandler: nameChangeHandler,
     inputBlurHandler: nameBlurChangeHandler,
-    resetInputs: resetNameHandler,
   } = useInput(
     (value) => value.trim().length > 2 && value.trim().length <= 100
   );
@@ -20,9 +25,8 @@ const NewContact = () => {
     value: enteredLastName,
     isValid: LastNameIsValid,
     hasError: LastNameInputHasError,
-    inputChangeHandler: LastNameChangeHandler,
-    inputBlurHandler: LastNameBlurChangeHandler,
-    resetInputs: resetLastNameHandler,
+    inputChangeHandler: lastNameChangeHandler,
+    inputBlurHandler: lastNameBlurChangeHandler,
   } = useInput(
     (value) => value.trim().length > 2 && value.trim().length <= 300
   );
@@ -32,9 +36,8 @@ const NewContact = () => {
     value: enteredDate,
     isValid: enteredDateIsValid,
     hasError: enteredDateHasError,
-    inputChangeHandler: DateChangeHandler,
-    inputBlurHandler: DateChangeBlurHandler,
-    resetInputs: resetEnteredDateHandler,
+    inputChangeHandler: dateChangeHandler,
+    inputBlurHandler: dateChangeBlurHandler,
   } = useInput((value) => value.trim() !== "");
 
   //contact type
@@ -42,36 +45,35 @@ const NewContact = () => {
     value: enteredContactType,
     inputChangeHandler: enteredContactTypeHandler,
     isValid: enteredContactTypeIsValid,
-    resetInputs: resetEnteredContactTypeHandler,
   } = useInput((value) => value.trim() !== "");
 
-  const hasNumber = /\d/;
-
   //contact
+  const hasNumber = /\d/;
+  const validEmailFormat = /^\S+@\S+\.\S{2}/;
 
   const {
     value: enteredContactValue,
     inputChangeHandler: enteredContactValueHandler,
     isValid: enteredContactValueIsValid,
-    resetInputs: resetEnteredContactValueHandler,
-  } = useInput((value) => hasNumber.test(value) || value.includes("@"));
+    hasError: enteredContactHasError,
+    inputBlurHandler: contactChangeBlurHandler,
+  } = useInput(
+    (value) =>
+      (hasNumber.test(value) && value.length > 5) ||
+      value.match(validEmailFormat)
+  );
 
-  //overall form validity
-  let formIsValid = false;
-  if (
-    LastNameIsValid &&
-    nameIsValid &&
-    enteredDateIsValid &&
-    enteredContactTypeIsValid &&
-    enteredContactValueIsValid
-  ) {
-    formIsValid = true;
-  }
-
-  const formSubmitHandler = e => {
+  const formSubmitHandler = (e) => {
     e.preventDefault();
 
-    if (!formIsValid) {
+    if (
+      !LastNameIsValid ||
+      !nameIsValid ||
+      !enteredDateIsValid ||
+      !enteredContactTypeIsValid ||
+      !enteredContactValueIsValid
+    ) {
+      setErrorMsg("All input fields must be valid!");
       return;
     }
 
@@ -87,25 +89,39 @@ const NewContact = () => {
       method: "POST",
       body: JSON.stringify({
         contact: newContactData,
-      })
+      }),
     });
 
-    //reset inputs
-    resetNameHandler("");
-    resetLastNameHandler("");
-    resetEnteredDateHandler("");
-    resetEnteredContactTypeHandler("");
-    resetEnteredContactValueHandler("");
+    history.push("/adresar");
   };
 
-  const contactTypeInput =
-    enteredContactType === "Mobile Phone"
-      ? "phone"
-      : enteredContactType === "Telephone"
-      ? "tel"
-      : enteredContactType === "Email"
-      ? "email"
-      : "text";
+  const contactType = [
+    {
+      value: "",
+      label: "Choose Contact Type",
+      disabled: true,
+    },
+    {
+      value: "phone",
+      label: "Mobile Phone",
+    },
+    {
+      value: "tel",
+      label: "Telephone",
+    },
+    {
+      value: "email",
+      label: "Email",
+    },
+    {
+      value: "number",
+      label: "Pager",
+    },
+  ];
+
+  const selectedContactType = contactType.find(
+    (option) => option.value === enteredContactType
+  );
 
   return (
     <section className={classes["add-contact-form"]}>
@@ -133,8 +149,8 @@ const NewContact = () => {
             type="text"
             id="lastName"
             value={enteredLastName}
-            onChange={LastNameChangeHandler}
-            onBlur={LastNameBlurChangeHandler}
+            onChange={lastNameChangeHandler}
+            onBlur={lastNameBlurChangeHandler}
           />
           {LastNameInputHasError && (
             <p className={classes["error-msg"]}>
@@ -146,12 +162,12 @@ const NewContact = () => {
           <label htmlFor="date">Date of Birth</label>
           <input
             value={enteredDate}
-            onChange={DateChangeHandler}
-            onBlur={DateChangeBlurHandler}
+            onChange={dateChangeHandler}
+            onBlur={dateChangeBlurHandler}
             type="date"
             id="date"
-            min="1950-01-01"
-            max="2011-12-31"
+            min="1905-01-01"
+            max={today}
           />
           {enteredDateHasError && (
             <p className={classes["error-msg"]}>Please enter Date of Birth</p>
@@ -165,28 +181,30 @@ const NewContact = () => {
             value={enteredContactType}
             onChange={enteredContactTypeHandler}
           >
-            <option value="" disabled>
-              Choose Contact Type
-            </option>
-            <option value="Mobile Phone">Mobile phone</option>
-            <option value="Telephone">Telephone</option>
-            <option value="Email">Email</option>
-            <option value="Pager">Pager</option>
+            {contactType.map((contact) => (
+              <option
+                key={contact.value}
+                disabled={contact.disabled}
+                value={contact.value}
+              >
+                {contact.label}
+              </option>
+            ))}
           </select>
         </div>
         {enteredContactType && (
-          <div className={classes["form-control"]}>
-            <label htmlFor={contactTypeInput}>{enteredContactType}</label>
-            <input
-              id={contactTypeInput}
-              type={contactTypeInput}
-              value={enteredContactValue}
-              onChange={enteredContactValueHandler}
-            />
-          </div>
+          <ContactTypeInput
+            contactType={selectedContactType}
+            onContactTypeChange={enteredContactValueHandler}
+            onContactTypeBlur={contactChangeBlurHandler}
+            hasError={enteredContactHasError}
+          />
         )}
         <div className={classes["submit-btn"]}>
-          <button disabled={!formIsValid}>Add New Contact</button>
+          <button>Add New Contact</button>
+        </div>
+        <div className={classes["form-control"]}>
+          {errorMsg && <p className={classes["error-msg"]}>{errorMsg}</p>}
         </div>
       </form>
     </section>

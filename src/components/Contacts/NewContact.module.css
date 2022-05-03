@@ -82,13 +82,6 @@
 }
 
 .error-msg{
-    padding: .5rem;
+    padding: .5rem 0;
     color: rgb(167, 19, 19);
-}
-
-.submit-btn button:disabled,
-.submit-btn button:hover:disabled{
-    background-color: #cccccc;
-    color: #666666;
-    cursor: not-allowed;
 }

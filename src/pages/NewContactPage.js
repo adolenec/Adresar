@@ -6,4 +6,4 @@ const NewContactPage = () => {
     )
 }
 
-export default NewContactPage;
+export default NewContactPage; 
