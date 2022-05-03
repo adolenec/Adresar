@@ -16,7 +16,6 @@ const NewContact = () => {
     hasError: nameInputHasError,
     inputChangeHandler: nameChangeHandler,
     inputBlurHandler: nameBlurChangeHandler,
-    resetInputs: resetNameHandler,
   } = useInput(
     (value) => value.trim().length > 2 && value.trim().length <= 100
   );
@@ -28,7 +27,6 @@ const NewContact = () => {
     hasError: LastNameInputHasError,
     inputChangeHandler: lastNameChangeHandler,
     inputBlurHandler: lastNameBlurChangeHandler,
-    resetInputs: resetLastNameHandler,
   } = useInput(
     (value) => value.trim().length > 2 && value.trim().length <= 300
   );
@@ -40,7 +38,6 @@ const NewContact = () => {
     hasError: enteredDateHasError,
     inputChangeHandler: dateChangeHandler,
     inputBlurHandler: dateChangeBlurHandler,
-    resetInputs: resetEnteredDateHandler,
   } = useInput((value) => value.trim() !== "");
 
   //contact type
@@ -48,7 +45,6 @@ const NewContact = () => {
     value: enteredContactType,
     inputChangeHandler: enteredContactTypeHandler,
     isValid: enteredContactTypeIsValid,
-    resetInputs: resetEnteredContactTypeHandler,
   } = useInput((value) => value.trim() !== "");
 
   //contact
@@ -60,7 +56,6 @@ const NewContact = () => {
     inputChangeHandler: enteredContactValueHandler,
     isValid: enteredContactValueIsValid,
     hasError: enteredContactHasError,
-    resetInputs: resetEnteredContactValueHandler,
     inputBlurHandler: contactChangeBlurHandler,
   } = useInput(
     (value) =>
