@@ -68,14 +68,6 @@ const NewContact = () => {
       value.match(validEmailFormat)
   );
 
-  const resetInputs = () => {
-    resetNameHandler("");
-    resetLastNameHandler("");
-    resetEnteredDateHandler("");
-    resetEnteredContactTypeHandler("");
-    resetEnteredContactValueHandler("");
-  };
-
   const formSubmitHandler = (e) => {
     e.preventDefault();
 
@@ -108,7 +100,7 @@ const NewContact = () => {
     history.push("/adresar");
   };
 
-  const options = [
+  const contactType = [
     {
       value: "",
       label: "Choose Contact Type",
@@ -132,11 +124,9 @@ const NewContact = () => {
     },
   ];
 
-
-
-   const selectedOption = options.find(option => option.value === enteredContactType);
-
-
+  const selectedContactType = contactType.find(
+    (option) => option.value === enteredContactType
+  );
 
   return (
     <section className={classes["add-contact-form"]}>
@@ -196,23 +186,23 @@ const NewContact = () => {
             value={enteredContactType}
             onChange={enteredContactTypeHandler}
           >
-            {options.map((option) => (
+            {contactType.map((contact) => (
               <option
-                key={option.value}
-                disabled={option.disabled}
-                value={option.value}
+                key={contact.value}
+                disabled={contact.disabled}
+                value={contact.value}
               >
-                {option.label}
+                {contact.label}
               </option>
             ))}
           </select>
         </div>
         {enteredContactType && (
           <ContactTypeInput
-            option={selectedOption}
-            enteredContactValueHandler={enteredContactValueHandler}
-            contactChangeBlurHandler={contactChangeBlurHandler}
-            enteredContactHasError={enteredContactHasError}
+            contactType={selectedContactType}
+            onContactTypeChange={enteredContactValueHandler}
+            onContactTypeBlur={contactChangeBlurHandler}
+            hasError={enteredContactHasError}
           />
         )}
         <div className={classes["submit-btn"]}>
