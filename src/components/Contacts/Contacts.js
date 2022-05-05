@@ -48,17 +48,23 @@ const Contacts = () => {
     return <p>Something went wrong!</p>;
   }
 
+  let contactAInfo;
+  let contactBInfo;
+
   const sortAscending = () => {
     const sortedContactsAscending = [...filteredContacts].sort(
       (contactA, contactB) => {
-        return contactA.lastName.toLowerCase() +
-          contactA.name.toLowerCase() +
-          contactA.contact.toLowerCase() >
-          contactB.lastName.toLowerCase() +
-            contactB.name.toLowerCase() +
-            contactB.contact.toLowerCase()
-          ? 1
-          : -1;
+        contactAInfo = (
+          contactA.lastName +
+          contactA.name +
+          contactA.contact
+        ).toLowerCase();
+        contactBInfo = (
+          contactB.lastName +
+          contactB.name +
+          contactB.contact
+        ).toLowerCase();
+        return contactAInfo < contactBInfo ? -1 : 1;
       }
     );
     setFilteredContacts(sortedContactsAscending);
@@ -67,14 +73,17 @@ const Contacts = () => {
   const sortDescending = () => {
     const sortedContactsDescending = [...filteredContacts].sort(
       (contactA, contactB) => {
-        return contactA.lastName.toLowerCase() +
-          contactA.name.toLowerCase() +
-          contactA.contact.toLowerCase() <
-          contactB.lastName.toLowerCase() +
-            contactB.name.toLowerCase() +
-            contactB.contact.toLowerCase()
-          ? 1
-          : -1;
+        contactAInfo = (
+          contactA.lastName +
+          contactA.name +
+          contactA.contact
+        ).toLowerCase();
+        contactBInfo = (
+          contactB.lastName +
+          contactB.name +
+          contactB.contact
+        ).toLowerCase();
+        return contactAInfo < contactBInfo ? 1 : -1;
       }
     );
     setFilteredContacts(sortedContactsDescending);
@@ -85,7 +94,8 @@ const Contacts = () => {
       setCurrentPage(1);
       const filteredContacts = contacts.filter((contact) => {
         return (
-          (contact.name.toLowerCase() + contact.lastName.toLowerCase())
+          (contact.name + contact.lastName)
+            .toLowerCase()
             .replace(/\s+/g, "")
             .includes(value.toLowerCase().replace(/\s+/g, "")) ||
           contact.contact.toLowerCase().includes(value.toLowerCase())
