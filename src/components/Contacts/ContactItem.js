@@ -1,6 +1,6 @@
 import classes from "./ContactItem.module.css";
 
-const ContactItem = (props) => {
+const ContactItem = ({ name, lastName, contact }) => {
   return (
     <div className={classes["contact-item"]}>
       <div className={classes["user-icon"]}>
@@ -8,9 +8,9 @@ const ContactItem = (props) => {
       </div>
       <div className={classes["contact-info"]}>
         <h3>
-          {props.name} {props.lastName}
+          {name} {lastName}
         </h3>
-        <h3>{props.contact}</h3>
+        <h3>{contact}</h3>
       </div>
       <div className={classes["contact-actions"]}>
         <button>

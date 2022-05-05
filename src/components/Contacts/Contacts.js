@@ -8,7 +8,7 @@ import Pagination from "./Pagination";
 const Contacts = () => {
   const [contacts, setContacts] = useState([]);
   const [filteredContacts, setFilteredContacts] = useState([]);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [contactsPerPage, setContactsPerPage] = useState(5);
 
@@ -39,8 +39,8 @@ const Contacts = () => {
         setContacts(loadedContacts);
         setFilteredContacts(loadedContacts);
       })
-      .catch((err) => {
-        setError(err.message);
+      .catch(() => {
+        setError(true);
       });
   }, []);
 
@@ -51,7 +51,12 @@ const Contacts = () => {
   const sortAscending = () => {
     const sortedContactsAscending = [...filteredContacts].sort(
       (contactA, contactB) => {
-        return contactA.lastName.toLowerCase() > contactB.lastName.toLowerCase()
+        return contactA.lastName.toLowerCase() +
+          contactA.name.toLowerCase() +
+          contactA.contact.toLowerCase() >
+          contactB.lastName.toLowerCase() +
+            contactB.name.toLowerCase() +
+            contactB.contact.toLowerCase()
           ? 1
           : -1;
       }
@@ -62,7 +67,12 @@ const Contacts = () => {
   const sortDescending = () => {
     const sortedContactsDescending = [...filteredContacts].sort(
       (contactA, contactB) => {
-        return contactA.lastName.toLowerCase() < contactB.lastName.toLowerCase()
+        return contactA.lastName.toLowerCase() +
+          contactA.name.toLowerCase() +
+          contactA.contact.toLowerCase() <
+          contactB.lastName.toLowerCase() +
+            contactB.name.toLowerCase() +
+            contactB.contact.toLowerCase()
           ? 1
           : -1;
       }
@@ -72,10 +82,14 @@ const Contacts = () => {
 
   const filterArray = (value) => {
     if (value) {
+      setCurrentPage(1);
       const filteredContacts = contacts.filter((contact) => {
-        return (contact.name.toLowerCase() + contact.lastName.toLowerCase())
-          .replace(/\s+/g, "")
-          .includes(value.toLowerCase().replace(/\s+/g, ""));
+        return (
+          (contact.name.toLowerCase() + contact.lastName.toLowerCase())
+            .replace(/\s+/g, "")
+            .includes(value.toLowerCase().replace(/\s+/g, "")) ||
+          contact.contact.toLowerCase().includes(value.toLowerCase())
+        );
       });
       setFilteredContacts(filteredContacts);
     } else {
@@ -83,40 +97,36 @@ const Contacts = () => {
     }
   };
 
-  const LastContactIndex = currentPage * contactsPerPage;
-  const FirstContactIndex = LastContactIndex - contactsPerPage;
-  const activeContacts = filteredContacts.slice(
-    FirstContactIndex,
-    LastContactIndex
-  );
+  const lastContactIndex = currentPage * contactsPerPage;
+  const firstContactIndex = lastContactIndex - contactsPerPage;
+
+  const numOfPages = Math.ceil(filteredContacts.length / contactsPerPage);
 
   const activePage = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
-  const contactsList = activeContacts.map((contact) => (
-    <ContactItem
-      key={contact.id}
-      contact={contact.contact}
-      name={contact.name}
-      lastName={contact.lastName}
-    />
-  ));
+  const contactsList = filteredContacts
+    .slice(firstContactIndex, lastContactIndex)
+    .map((contact) => (
+      <ContactItem
+        key={contact.id}
+        contact={contact.contact}
+        name={contact.name}
+        lastName={contact.lastName}
+      />
+    ));
 
   return (
     <div className={classes["contacts-container"]}>
       <ContactsHeader
         onSortAsc={sortAscending}
         onSortDesc={sortDescending}
-        onInput={filterArray}
-        onSelect={setContactsPerPage}
+        onSearch={filterArray}
+        onSelectContactsPerPage={setContactsPerPage}
       />
       <div>{contactsList}</div>
-      <Pagination
-        contactsPerPage={contactsPerPage}
-        totalContacts={filteredContacts.length}
-        onActivePage={activePage}
-      />
+      <Pagination numOfPages={numOfPages} onActivePage={activePage} />
     </div>
   );
 };
