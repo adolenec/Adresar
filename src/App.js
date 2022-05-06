@@ -22,14 +22,12 @@ function App() {
           </Route>
         )}
         {!isAuthenticated && <Redirect to="/" exact />}
-
         <Route path="/adresar">
           <ContactsPage />
         </Route>
         <Route path="/kontakt/detalji/:kontaktId">
           <ContactDetailPage />
         </Route>
-
         <Route path="/kontakt">
           <NewContactPage />
         </Route>
