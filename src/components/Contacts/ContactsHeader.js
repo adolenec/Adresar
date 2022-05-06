@@ -22,13 +22,11 @@ const ContactsHeader = ({
     onSortDesc();
   };
 
-
   const searchHandler = (e) => {
     setIsSortedAsc(false);
     setIsSortedDesc(false);
     onSearch(e.target.value);
   };
-
 
   const selectChangeHandler = (e) => {
     onSelectContactsPerPage(+e.target.value);

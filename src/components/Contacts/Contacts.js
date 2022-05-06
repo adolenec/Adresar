@@ -43,6 +43,7 @@ const Contacts = () => {
 
   const rerender = useSelector((state) => state.contacts.rerender);
 
+
   const dispatch = useDispatch();
 
 

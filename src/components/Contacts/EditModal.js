@@ -1,20 +1,20 @@
 import ReactDOM from "react-dom";
 import { Fragment } from "react";
-import classes from "./EditModal.module.css";
+import classes from "./DeleteModal.module.css";
 import NewContactForm from "./NewContactForm";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { contactsActions } from "../store/contacts";
 import { Backdrop } from "./DeleteModal";
 
-const EditOverlay = (props) => {
+const EditOverlay = ({ onShowModal }) => {
   const selectedContact = useSelector(
     (state) => state.contacts.selectedContact
   );
   const dispatch = useDispatch();
 
   const hideModal = () => {
-    props.onShowModal(false);
+    onShowModal(false);
     dispatch(contactsActions.setIsEditingContact(false));
   };
   return (

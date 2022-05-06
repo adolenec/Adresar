@@ -3,7 +3,6 @@ import { Fragment } from "react";
 import { useSelector } from "react-redux";
 import SelectedContact from "./SelectedContact";
 
-
 const ContactDetail = () => {
   const contactsData = useSelector((state) => state.contacts.contactsData);
   const params = useParams();
@@ -11,9 +10,6 @@ const ContactDetail = () => {
   const contact = contactsData.find(
     (contact) => contact.id === params.kontaktId
   );
-
-  console.log(contactsData);
-  console.log(params);
 
   return (
     <Fragment>

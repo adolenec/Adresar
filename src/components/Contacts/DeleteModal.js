@@ -3,29 +3,29 @@ import ReactDOM from "react-dom";
 import { Fragment } from "react";
 import { useSelector } from "react-redux";
 
-export const Backdrop = (props) => {
+export const Backdrop = ({ onShowModal }) => {
   return (
     <div
       className={classes.backdrop}
       onClick={() => {
-        props.onShowModal(false);
+        onShowModal(false);
       }}
     ></div>
   );
 };
 
-const Overlay = (props) => {
+const DeleteOverlay = ({ onRemove, onShowModal }) => {
   const selectedContact = useSelector(
     (state) => state.contacts.selectedContact
   );
 
   const deleteContact = () => {
-    props.onRemove(selectedContact.id);
-    props.onShowModal(false);
+    onRemove(selectedContact.id);
+    onShowModal(false);
   };
 
   const closeModal = () => {
-    props.onShowModal(false);
+    onShowModal(false);
   };
 
   return (
@@ -48,15 +48,15 @@ const Overlay = (props) => {
   );
 };
 
-const DeleteModal = (props) => {
+const DeleteModal = ({ onShowModal, onRemove }) => {
   return (
     <Fragment>
       {ReactDOM.createPortal(
-        <Overlay onShowModal={props.onShowModal} onRemove={props.onRemove} />,
+        <DeleteOverlay onShowModal={onShowModal} onRemove={onRemove} />,
         document.getElementById("overlay")
       )}
       {ReactDOM.createPortal(
-        <Backdrop onShowModal={props.onShowModal} />,
+        <Backdrop onShowModal={onShowModal} />,
         document.getElementById("backdrop")
       )}
     </Fragment>

@@ -54,11 +54,11 @@ input[type="search"]::placeholder {
   cursor: pointer;
 }
 
-.select option{
-    background:rgb(32, 32, 32);
-    color: #ccc;
+.select option {
+  background: rgb(32, 32, 32);
+  color: #ccc;
 }
 
 .text {
-  color:rgb(158, 156, 156);
+  color: rgb(158, 156, 156);
 }

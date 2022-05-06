@@ -3,41 +3,25 @@ import { Link } from "react-router-dom";
 import { contactsActions } from "../store/contacts";
 import { useDispatch } from "react-redux";
 
-// const ContactItem = (props) => {
-//   const dispatch = useDispatch();
-
-//   const selectedContact = () => {
-//     const selectedItemData = {
-//       id: props.id,
-//       name: props.name,
-//       lastName: props.lastName,
-//       contactType: props.contactType,
-//       contact: props.contact,
-//     };
-
-//     console.log(selectedItemData);
-
-//     dispatch(contactsActions.setSelectedContact(selectedItemData));
-//   };
-
-//   const showEditModal = () => {
-//     props.onShowEditModal(true);
-//     dispatch(contactsActions.setIsEditingContact(true))
-//   }
-
-const ContactItem = ({ name, lastName, contact, id, contactType, onShowEditModal, onShowDeleteModal }) => {
+const ContactItem = ({
+  name,
+  lastName,
+  contact,
+  id,
+  contactType,
+  onShowEditModal,
+  onShowDeleteModal,
+}) => {
   const dispatch = useDispatch();
 
   const selectedContact = () => {
     const selectedItemData = {
-      id: id,
-      name: name,
-      lastName: lastName,
-      contactType: contactType,
-      contact: contact,
+      id,
+      name,
+      lastName,
+      contactType,
+      contact,
     };
-
-    console.log(selectedItemData);
 
     dispatch(contactsActions.setSelectedContact(selectedItemData));
   };

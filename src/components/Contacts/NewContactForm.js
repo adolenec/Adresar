@@ -37,8 +37,8 @@ const NewContactForm = () => {
   //last name
   const {
     value: enteredLastName,
-    isValid: LastNameIsValid,
-    hasError: LastNameInputHasError,
+    isValid: lastNameIsValid,
+    hasError: lastNameInputHasError,
     inputChangeHandler: lastNameChangeHandler,
     inputBlurHandler: lastNameBlurChangeHandler,
   } = useInput(
@@ -77,16 +77,22 @@ const NewContactForm = () => {
       value.match(validEmailFormat)
   );
 
+  let formIsValid = false;
+
+  if (
+    lastNameIsValid &&
+    nameIsValid &&
+    enteredDateIsValid &&
+    enteredContactTypeIsValid &&
+    enteredContactValueIsValid
+  ) {
+    formIsValid = true;
+  }
+
   const formSubmitHandler = (e) => {
     e.preventDefault();
 
-    if (
-      !LastNameIsValid ||
-      !nameIsValid ||
-      !enteredDateIsValid ||
-      !enteredContactTypeIsValid ||
-      !enteredContactValueIsValid
-    ) {
+    if (!formIsValid) {
       setErrorMsg("All input fields must be valid!");
       return;
     }
@@ -140,13 +146,7 @@ const NewContactForm = () => {
   const editContactSubmitForm = (e) => {
     e.preventDefault();
 
-    if (
-      !LastNameIsValid ||
-      !nameIsValid ||
-      !enteredDateIsValid ||
-      !enteredContactTypeIsValid ||
-      !enteredContactValueIsValid
-    ) {
+    if (!formIsValid) {
       setErrorMsg("All input fields must be valid!");
       return;
     }
@@ -166,101 +166,98 @@ const NewContactForm = () => {
       dispatch(contactsActions.rerender());
     });
 
-    // resetInputs();
     setSuccessMsg("Contact updated successfully!");
+    setErrorMsg("");
   };
 
-
   return (
-      <form
-        className={classes.form}
-        onSubmit={isEditingContact ? editContactSubmitForm : formSubmitHandler}
-      >
-        <div className={classes["form-control"]}>
-          <label htmlFor="name">Name</label>
-          <input
-            type="text"
-            id="name"
-            value={enteredName}
-            onChange={nameChangeHandler}
-            onBlur={nameBlurChangeHandler}
-          />
-          {nameInputHasError && (
-            <p className={classes["error-msg"]}>Please enter a valid name</p>
-          )}
-        </div>
-        <div className={classes["form-control"]}>
-          <label htmlFor="lastName">Last Name</label>
-          <input
-            type="text"
-            id="lastName"
-            value={enteredLastName}
-            onChange={lastNameChangeHandler}
-            onBlur={lastNameBlurChangeHandler}
-          />
-          {LastNameInputHasError && (
-            <p className={classes["error-msg"]}>
-              Please enter a valid last name
-            </p>
-          )}
-        </div>
-        <div className={classes["form-control"]}>
-          <label htmlFor="date">Date of Birth</label>
-          <input
-            value={enteredDate}
-            onChange={dateChangeHandler}
-            onBlur={dateChangeBlurHandler}
-            type="date"
-            id="date"
-            min="1905-01-01"
-            max={today}
-          />
-          {enteredDateHasError && (
-            <p className={classes["error-msg"]}>Please enter Date of Birth</p>
-          )}
-        </div>
-        <div className={classes["form-control"]}>
-          <label htmlFor="contactType">Contact Type</label>
-          <select
-            id="contactType"
-            name="contactType"
-            value={enteredContactType}
-            onChange={enteredContactTypeHandler}
-          >
-            {contactType.map((contact) => (
-              <option
-                key={contact.value}
-                disabled={contact.disabled}
-                value={contact.value}
-              >
-                {contact.label}
-              </option>
-            ))}
-          </select>
-        </div>
-        {enteredContactType && (
-          <ContactTypeInput
-            contactType={selectedContactType}
-            onContactTypeChange={enteredContactValueHandler}
-            onContactTypeBlur={contactChangeBlurHandler}
-            hasError={enteredContactHasError}
-          />
+    <form
+      className={classes.form}
+      onSubmit={isEditingContact ? editContactSubmitForm : formSubmitHandler}
+    >
+      <div className={classes["form-control"]}>
+        <label htmlFor="name">Name</label>
+        <input
+          type="text"
+          id="name"
+          value={enteredName}
+          onChange={nameChangeHandler}
+          onBlur={nameBlurChangeHandler}
+        />
+        {nameInputHasError && (
+          <p className={classes["error-msg"]}>Please enter a valid name</p>
         )}
-        {!isEditingContact && (
-          <div className={classes["submit-btn"]}>
-            <button>Add New Contact</button>
-          </div>
+      </div>
+      <div className={classes["form-control"]}>
+        <label htmlFor="lastName">Last Name</label>
+        <input
+          type="text"
+          id="lastName"
+          value={enteredLastName}
+          onChange={lastNameChangeHandler}
+          onBlur={lastNameBlurChangeHandler}
+        />
+        {lastNameInputHasError && (
+          <p className={classes["error-msg"]}>Please enter a valid last name</p>
         )}
-        {isEditingContact && (
-          <div className={classes["submit-btn"]}>
-            <button>Edit Contact</button>
-            <p className={classes.success}>{successMsg}</p>
-          </div>
+      </div>
+      <div className={classes["form-control"]}>
+        <label htmlFor="date">Date of Birth</label>
+        <input
+          value={enteredDate}
+          onChange={dateChangeHandler}
+          onBlur={dateChangeBlurHandler}
+          type="date"
+          id="date"
+          min="1905-01-01"
+          max={today}
+        />
+        {enteredDateHasError && (
+          <p className={classes["error-msg"]}>Please enter Date of Birth</p>
         )}
-        <div className={classes["form-control"]}>
-          {errorMsg && <p className={classes["error-msg"]}>{errorMsg}</p>}
+      </div>
+      <div className={classes["form-control"]}>
+        <label htmlFor="contactType">Contact Type</label>
+        <select
+          id="contactType"
+          name="contactType"
+          value={enteredContactType}
+          onChange={enteredContactTypeHandler}
+        >
+          {contactType.map((contact) => (
+            <option
+              key={contact.value}
+              disabled={contact.disabled}
+              value={contact.value}
+            >
+              {contact.label}
+            </option>
+          ))}
+        </select>
+      </div>
+      {enteredContactType && (
+        <ContactTypeInput
+          contactType={selectedContactType}
+          onContactTypeChange={enteredContactValueHandler}
+          onContactTypeBlur={contactChangeBlurHandler}
+          hasError={enteredContactHasError}
+        />
+      )}
+      {!isEditingContact && (
+        <div className={classes["submit-btn"]}>
+          <button>Add New Contact</button>
         </div>
-      </form>
+      )}
+      {isEditingContact && (
+        <div className={classes["submit-btn"]}>
+          <button>Edit Contact</button>
+          <p className={classes.success}>{successMsg}</p>
+        </div>
+      )}
+      <div className={classes["form-control"]}>
+        {errorMsg && <p className={classes["error-msg"]}>{errorMsg}</p>}
+      </div>
+    </form>
   );
 };
 
