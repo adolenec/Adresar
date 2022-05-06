@@ -1,14 +1,17 @@
 import classes from "./DeleteModal.module.css";
 import ReactDOM from "react-dom";
 import { Fragment } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { contactsActions } from "../store/contacts";
 
 export const Backdrop = ({ onShowModal }) => {
+  const dispatch = useDispatch();
   return (
     <div
       className={classes.backdrop}
       onClick={() => {
         onShowModal(false);
+        dispatch(contactsActions.setIsEditingContact(false));
       }}
     ></div>
   );
