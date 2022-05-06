@@ -1,0 +1,24 @@
+.form-control,
+.submit-btn {
+  padding: 0.5rem 3rem;
+}
+
+.form-control label {
+  display: block;
+  padding: 0.3rem 0;
+  color: rgb(97, 96, 96);
+  font-size: 1.1rem;
+}
+
+.form-control input,
+.form-control select {
+  width: 100%;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 10px;
+}
+
+.error-msg {
+  padding: 0.5rem 0;
+  color: rgb(167, 19, 19);
+}

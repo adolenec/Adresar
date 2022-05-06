@@ -10,15 +10,21 @@
 
   .modal {
     position: fixed;
-    top: 30vh;
-    left: 30%;
-    width: 40%;
+    top: 20vh;
+    left: 37.5%;
+    max-height: 60%;
+    overflow-y: auto;
+    width: 25%;
     z-index: 100;
-    overflow: hidden;
     background: rgb(44, 44, 44);
     border-radius: 10px;
     color: black;
     animation: fadeIn .6s;
+  }
+
+  .modal::-webkit-scrollbar {
+    width: 0;
+    height: 0;
   }
 
   .header {

@@ -3,17 +3,26 @@ import useInput from "../../hooks/useInput";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { database } from "./Contacts";
-import { set, ref} from "firebase/database";
+import { set, ref } from "firebase/database";
 import { useDispatch } from "react-redux";
 import { contactsActions } from "../store/contacts";
 
+import { useHistory } from "react-router-dom";
+import ContactTypeInput from "./ContactTypeInput";
+
 const NewContactForm = () => {
-    const [successMsg, setSuccessMsg] = useState('');
+  const [successMsg, setSuccessMsg] = useState("");
   const isEditingContact = useSelector(
     (state) => state.contacts.isEditingContact
   );
-  const selectedContact = useSelector((state) => state.contacts.selectedContact);
+  const selectedContact = useSelector(
+    (state) => state.contacts.selectedContact
+  );
   const dispatch = useDispatch();
+  const [errorMsg, setErrorMsg] = useState(null);
+  const history = useHistory();
+  let today = new Date().toISOString().slice(0, 10);
+
   //name
   const {
     value: enteredName,
@@ -21,7 +30,6 @@ const NewContactForm = () => {
     hasError: nameInputHasError,
     inputChangeHandler: nameChangeHandler,
     inputBlurHandler: nameBlurChangeHandler,
-    resetInputs: resetNameHandler,
   } = useInput(
     (value) => value.trim().length > 2 && value.trim().length <= 100
   );
@@ -31,9 +39,8 @@ const NewContactForm = () => {
     value: enteredLastName,
     isValid: LastNameIsValid,
     hasError: LastNameInputHasError,
-    inputChangeHandler: LastNameChangeHandler,
-    inputBlurHandler: LastNameBlurChangeHandler,
-    resetInputs: resetLastNameHandler,
+    inputChangeHandler: lastNameChangeHandler,
+    inputBlurHandler: lastNameBlurChangeHandler,
   } = useInput(
     (value) => value.trim().length > 2 && value.trim().length <= 300
   );
@@ -43,9 +50,8 @@ const NewContactForm = () => {
     value: enteredDate,
     isValid: enteredDateIsValid,
     hasError: enteredDateHasError,
-    inputChangeHandler: DateChangeHandler,
-    inputBlurHandler: DateChangeBlurHandler,
-    resetInputs: resetEnteredDateHandler,
+    inputChangeHandler: dateChangeHandler,
+    inputBlurHandler: dateChangeBlurHandler,
   } = useInput((value) => value.trim() !== "");
 
   //contact type
@@ -53,44 +59,35 @@ const NewContactForm = () => {
     value: enteredContactType,
     inputChangeHandler: enteredContactTypeHandler,
     isValid: enteredContactTypeIsValid,
-    resetInputs: resetEnteredContactTypeHandler,
   } = useInput((value) => value.trim() !== "");
 
-  const hasNumber = /\d/;
-
   //contact
+  const hasNumber = /\d/;
+  const validEmailFormat = /^\S+@\S+\.\S{2}/;
 
   const {
     value: enteredContactValue,
     inputChangeHandler: enteredContactValueHandler,
     isValid: enteredContactValueIsValid,
-    resetInputs: resetEnteredContactValueHandler,
-  } = useInput((value) => hasNumber.test(value) || value.includes("@"));
-
-  //overall form validity
-  let formIsValid = false;
-  if (
-    LastNameIsValid &&
-    nameIsValid &&
-    enteredDateIsValid &&
-    enteredContactTypeIsValid &&
-    enteredContactValueIsValid
-  ) {
-    formIsValid = true;
-  }
-
-  const resetInputs = () => {
-    resetNameHandler("");
-    resetLastNameHandler("");
-    resetEnteredDateHandler("");
-    resetEnteredContactTypeHandler("");
-    resetEnteredContactValueHandler("");
-  }
+    hasError: enteredContactHasError,
+    inputBlurHandler: contactChangeBlurHandler,
+  } = useInput(
+    (value) =>
+      (hasNumber.test(value) && value.length > 5) ||
+      value.match(validEmailFormat)
+  );
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
 
-    if (!formIsValid) {
+    if (
+      !LastNameIsValid ||
+      !nameIsValid ||
+      !enteredDateIsValid ||
+      !enteredContactTypeIsValid ||
+      !enteredContactValueIsValid
+    ) {
+      setErrorMsg("All input fields must be valid!");
       return;
     }
 
@@ -109,123 +106,161 @@ const NewContactForm = () => {
       }),
     });
 
-    //reset inputs
-    resetInputs();
+    history.push("/adresar");
   };
+
+  const contactType = [
+    {
+      value: "",
+      label: "Choose Contact Type",
+      disabled: true,
+    },
+    {
+      value: "phone",
+      label: "Mobile Phone",
+    },
+    {
+      value: "tel",
+      label: "Telephone",
+    },
+    {
+      value: "email",
+      label: "Email",
+    },
+    {
+      value: "number",
+      label: "Pager",
+    },
+  ];
+
+  const selectedContactType = contactType.find(
+    (option) => option.value === enteredContactType
+  );
 
   const editContactSubmitForm = (e) => {
     e.preventDefault();
 
-    if(!formIsValid){
-        return;
+    if (
+      !LastNameIsValid ||
+      !nameIsValid ||
+      !enteredDateIsValid ||
+      !enteredContactTypeIsValid ||
+      !enteredContactValueIsValid
+    ) {
+      setErrorMsg("All input fields must be valid!");
+      return;
     }
 
-    
     const editedContactData = {
-        name: enteredName,
-        lastName: enteredLastName,
-        dateOfBirth: enteredDate,
-        contactType: enteredContactType,
-        contact: enteredContactValue,
-      };
+      name: enteredName,
+      lastName: enteredLastName,
+      dateOfBirth: enteredDate,
+      contactType: enteredContactType,
+      contact: enteredContactValue,
+    };
 
-      set(ref(database, `contacts/${selectedContact.id}/contact`), editedContactData).then(()=>{
-        dispatch(contactsActions.rerender());
-      });
+    set(
+      ref(database, `contacts/${selectedContact.id}/contact`),
+      editedContactData
+    ).then(() => {
+      dispatch(contactsActions.rerender());
+    });
 
-      resetInputs();
-      setSuccessMsg('Contact updated successfully!');
-  }
-  
+    // resetInputs();
+    setSuccessMsg("Contact updated successfully!");
+  };
 
-  const contactTypeInput =
-    enteredContactType === "Mobile Phone"
-      ? "phone"
-      : enteredContactType === "Telephone"
-      ? "tel"
-      : enteredContactType === "Email"
-      ? "email"
-      : "text";
 
   return (
-    <form className={classes.form} onSubmit={isEditingContact ? editContactSubmitForm : formSubmitHandler}>
-      <div className={classes["form-control"]}>
-        <label htmlFor="name">Name</label>
-        <input
-          type="text"
-          id="name"
-          value={enteredName}
-          onChange={nameChangeHandler}
-          onBlur={nameBlurChangeHandler}
-        />
-        {nameInputHasError && (
-          <p className={classes["error-msg"]}>Please enter a valid name</p>
-        )}
-      </div>
-      <div className={classes["form-control"]}>
-        <label htmlFor="lastName">Last Name</label>
-        <input
-          type="text"
-          id="lastName"
-          value={enteredLastName}
-          onChange={LastNameChangeHandler}
-          onBlur={LastNameBlurChangeHandler}
-        />
-        {LastNameInputHasError && (
-          <p className={classes["error-msg"]}>Please enter a valid last name</p>
-        )}
-      </div>
-      <div className={classes["form-control"]}>
-        <label htmlFor="date">Date of Birth</label>
-        <input
-          value={enteredDate}
-          onChange={DateChangeHandler}
-          onBlur={DateChangeBlurHandler}
-          type="date"
-          id="date"
-          min="1950-01-01"
-          max="2011-12-31"
-        />
-        {enteredDateHasError && (
-          <p className={classes["error-msg"]}>Please enter Date of Birth</p>
-        )}
-      </div>
-      <div className={classes["form-control"]}>
-        <label htmlFor="contactType">Contact Type</label>
-        <select
-          id="contactType"
-          name="contactType"
-          value={enteredContactType}
-          onChange={enteredContactTypeHandler}
-        >
-          <option value="" disabled>
-            Choose Contact Type
-          </option>
-          <option value="Mobile Phone">Mobile phone</option>
-          <option value="Telephone">Telephone</option>
-          <option value="Email">Email</option>
-          <option value="Pager">Pager</option>
-        </select>
-      </div>
-      {enteredContactType && (
+      <form
+        className={classes.form}
+        onSubmit={isEditingContact ? editContactSubmitForm : formSubmitHandler}
+      >
         <div className={classes["form-control"]}>
-          <label htmlFor={contactTypeInput}>{enteredContactType}</label>
+          <label htmlFor="name">Name</label>
           <input
-            id={contactTypeInput}
-            type={contactTypeInput}
-            value={enteredContactValue}
-            onChange={enteredContactValueHandler}
+            type="text"
+            id="name"
+            value={enteredName}
+            onChange={nameChangeHandler}
+            onBlur={nameBlurChangeHandler}
           />
+          {nameInputHasError && (
+            <p className={classes["error-msg"]}>Please enter a valid name</p>
+          )}
         </div>
-      )}
-      {!isEditingContact &&<div className={classes["submit-btn"]}>
-        <button disabled={!formIsValid}>Add New Contact</button>
-      </div>}
-      {isEditingContact && <div className={classes["submit-btn"]}>
-        <button disabled={!formIsValid}>Edit Contact</button>
-        <p className={classes.success}>{successMsg}</p>
-      </div>}
-    </form>
+        <div className={classes["form-control"]}>
+          <label htmlFor="lastName">Last Name</label>
+          <input
+            type="text"
+            id="lastName"
+            value={enteredLastName}
+            onChange={lastNameChangeHandler}
+            onBlur={lastNameBlurChangeHandler}
+          />
+          {LastNameInputHasError && (
+            <p className={classes["error-msg"]}>
+              Please enter a valid last name
+            </p>
+          )}
+        </div>
+        <div className={classes["form-control"]}>
+          <label htmlFor="date">Date of Birth</label>
+          <input
+            value={enteredDate}
+            onChange={dateChangeHandler}
+            onBlur={dateChangeBlurHandler}
+            type="date"
+            id="date"
+            min="1905-01-01"
+            max={today}
+          />
+          {enteredDateHasError && (
+            <p className={classes["error-msg"]}>Please enter Date of Birth</p>
+          )}
+        </div>
+        <div className={classes["form-control"]}>
+          <label htmlFor="contactType">Contact Type</label>
+          <select
+            id="contactType"
+            name="contactType"
+            value={enteredContactType}
+            onChange={enteredContactTypeHandler}
+          >
+            {contactType.map((contact) => (
+              <option
+                key={contact.value}
+                disabled={contact.disabled}
+                value={contact.value}
+              >
+                {contact.label}
+              </option>
+            ))}
+          </select>
+        </div>
+        {enteredContactType && (
+          <ContactTypeInput
+            contactType={selectedContactType}
+            onContactTypeChange={enteredContactValueHandler}
+            onContactTypeBlur={contactChangeBlurHandler}
+            hasError={enteredContactHasError}
+          />
+        )}
+        {!isEditingContact && (
+          <div className={classes["submit-btn"]}>
+            <button>Add New Contact</button>
+          </div>
+        )}
+        {isEditingContact && (
+          <div className={classes["submit-btn"]}>
+            <button>Edit Contact</button>
+            <p className={classes.success}>{successMsg}</p>
+          </div>
+        )}
+        <div className={classes["form-control"]}>
+          {errorMsg && <p className={classes["error-msg"]}>{errorMsg}</p>}
+        </div>
+      </form>
   );
 };
 

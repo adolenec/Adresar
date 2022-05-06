@@ -1,21 +1,21 @@
-.contact-item{
-    border-bottom: 2px solid rgb(231, 89, 37);
-    padding: 1rem 0rem;
-    color: #ccc;
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
+.contact-item {
+  border-bottom: 2px solid rgb(231, 89, 37);
+  padding: 1rem 0rem;
+  color: #ccc;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
 }
 
-.user-icon i{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #ccc;
-    height: 100px;
-    width: 100px;
-    background: rgb(56, 56, 56);
-    border-radius: 50%;
+.user-icon i {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ccc;
+  height: 100px;
+  width: 100px;
+  background: rgb(56, 56, 56);
+  border-radius: 50%;
 }
 
 a{
@@ -30,23 +30,21 @@ a{
     gap: 1rem;
 }
 
-.contact-actions{
-    margin-left: auto;
-    display: flex;
-    gap: 1rem;
+.contact-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 1rem;
 }
 
-.contact-actions button{
-    padding: 0;
-    cursor: pointer;
-    background: none;
-    border: none;
+.contact-actions button {
+  padding: 0;
+  cursor: pointer;
+  background: none;
+  border: none;
 }
 
-.contact-actions button i{
-    color: #ccc;
+
+.contact-actions button i {
+  color: #ccc;
 }
 
-.contact-actions button i:hover{
-    color: rgb(109, 104, 104);
-}
