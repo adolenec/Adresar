@@ -40,19 +40,6 @@ i {
   padding: 0.3rem;
 }
 
-input[type="search"] {
-  padding: 0.5rem;
-  display: block;
-  border: 1px solid rgb(34, 34, 34);
-  border-radius: 20px;
-  width: 15rem;
-  background: white url("../../assets/search-icon.svg") no-repeat 13.5rem center;
-}
-
-input[type="search"]::placeholder {
-  color: black;
-}
-
 .logout-btn {
   padding: 0.3rem 0.8rem;
   font-size: 1.3rem;

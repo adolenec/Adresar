@@ -16,9 +16,6 @@ const Navigation = () => {
       <nav>
         <ul>
           <li>
-            <input type="search" placeholder="Search..." />
-          </li>
-          <li>
             <NavLink activeClassName={classes.active} to="/kontakt">
               <i className="fa-solid fa-user-plus"></i> New Contact
             </NavLink>

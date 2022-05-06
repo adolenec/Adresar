@@ -1,7 +1,11 @@
 import classes from "./ContactTypeInput.module.css";
 
-const ContactTypeInput = ({contactType, onContactTypeChange, onContactTypeBlur, hasError}) => {
-
+const ContactTypeInput = ({
+  contactType,
+  onContactTypeChange,
+  onContactTypeBlur,
+  hasError,
+}) => {
   return (
     <div className={classes["form-control"]}>
       <label htmlFor={contactType.value}>{contactType.label}</label>

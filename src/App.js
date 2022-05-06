@@ -2,6 +2,7 @@ import { Route, Switch, Redirect } from "react-router-dom";
 
 import AuthenticationPage from "./pages/AuthenticationPage";
 import NewContactPage from "./pages/NewContactPage";
+import ContactsPage from "./pages/ContactsPage";
 import { useSelector } from "react-redux";
 import Navigation from "./components/layout/Navigation";
 
@@ -20,6 +21,9 @@ function App() {
         {!isAuthenticated && <Redirect to="/" exact />}
         <Route path="/kontakt">
           <NewContactPage />
+        </Route>
+        <Route path="/adresar">
+          <ContactsPage />
         </Route>
       </Switch>
     </>
