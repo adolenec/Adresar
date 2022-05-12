@@ -29,7 +29,7 @@ const app = initializeApp(firebaseConfig);
 export const database = getDatabase(app);
 
 const Contacts = () => {
-  const [contacts, setContacts] = useState([]);
+  const contacts = useSelector((state) => state.contacts.contacts);
   const [filteredContacts, setFilteredContacts] = useState([]);
   const [error, setError] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -66,8 +66,6 @@ const Contacts = () => {
             lastName: responseData[key].contact.lastName,
           });
         }
-
-        setContacts(loadedContacts);
         setFilteredContacts(loadedContacts);
         dispatch(contactsActions.setContacts(loadedContacts));
       })
@@ -154,7 +152,6 @@ const Contacts = () => {
     });
   };
 
-
   const displayDeleteModal = (selectedContact) => {
     setSelectedContact(selectedContact);
     setShowDeleteModal(true);
@@ -162,7 +159,7 @@ const Contacts = () => {
 
   const displayEditModal = (selectedContact) => {
     setShowEditModal(true);
-    setSelectedContact(selectedContact)
+    setSelectedContact(selectedContact);
     dispatch(contactsActions.setIsEditingContact(true));
   };
 
@@ -196,7 +193,12 @@ const Contacts = () => {
           selectedContact={selectedContact}
         />
       )}
-      {showEditModal && <EditModal onShowModal={setShowEditModal} selectedContact={selectedContact} />}
+      {showEditModal && (
+        <EditModal
+          onShowModal={setShowEditModal}
+          selectedContact={selectedContact}
+        />
+      )}
     </Fragment>
   );
 };
