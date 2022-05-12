@@ -1,11 +1,7 @@
 import classes from "./DeleteModal.module.css";
 import ReactDOM from "react-dom";
-import { useSelector } from "react-redux";
 
-const DeleteOverlay = ({ onRemove, onShowModal }) => {
-  const selectedContact = useSelector(
-    (state) => state.contacts.selectedContact
-  );
+const DeleteOverlay = ({ onRemove, onShowModal, selectedContact }) => {
 
   const deleteContact = () => {
     onRemove(selectedContact.id);
@@ -43,11 +39,11 @@ const DeleteOverlay = ({ onRemove, onShowModal }) => {
   );
 };
 
-const DeleteModal = ({ onShowModal, onRemove }) => {
+const DeleteModal = ({ onShowModal, onRemove, selectedContact }) => {
   return (
     <>
       {ReactDOM.createPortal(
-        <DeleteOverlay onShowModal={onShowModal} onRemove={onRemove} />,
+        <DeleteOverlay onShowModal={onShowModal} onRemove={onRemove} selectedContact={selectedContact} />,
         document.getElementById("overlay")
       )}
     </>

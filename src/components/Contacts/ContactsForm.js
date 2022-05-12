@@ -10,14 +10,14 @@ import { contactsActions } from "../store/contacts";
 import { useHistory } from "react-router-dom";
 import ContactTypeInput from "./ContactTypeInput";
 
-const ContactsForm = () => {
+const ContactsForm = (props) => {
   const [successMsg, setSuccessMsg] = useState("");
   const isEditingContact = useSelector(
     (state) => state.contacts.isEditingContact
   );
-  const selectedContact = useSelector(
-    (state) => state.contacts.selectedContact
-  );
+  // const selectedContact = useSelector(
+  //   (state) => state.contacts.selectedContact
+  // );
   const dispatch = useDispatch();
   const [errorMsg, setErrorMsg] = useState(null);
   const history = useHistory();
@@ -160,7 +160,7 @@ const ContactsForm = () => {
     };
 
     set(
-      ref(database, `contacts/${selectedContact.id}/contact`),
+      ref(database, `contacts/${props.selectedContact.id}/contact`),
       editedContactData
     ).then(() => {
       dispatch(contactsActions.rerender());

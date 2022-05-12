@@ -37,6 +37,7 @@ const Contacts = () => {
 
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [selectedContact, setSelectedContact] = useState(null);
 
   const rerender = useSelector((state) => state.contacts.rerender);
 
@@ -153,14 +154,17 @@ const Contacts = () => {
     });
   };
 
+
   const displayDeleteModal = (selectedContact) => {
+    setSelectedContact(selectedContact);
     setShowDeleteModal(true);
-    dispatch(contactsActions.setSelectedContact(selectedContact));
+    // dispatch(contactsActions.setSelectedContact(selectedContact));
   };
 
   const displayEditModal = (selectedContact) => {
     setShowEditModal(true);
-    dispatch(contactsActions.setSelectedContact(selectedContact));
+    setSelectedContact(selectedContact)
+    // dispatch(contactsActions.setSelectedContact(selectedContact));
     dispatch(contactsActions.setIsEditingContact(true));
   };
 
@@ -191,9 +195,10 @@ const Contacts = () => {
         <DeleteModal
           onShowModal={setShowDeleteModal}
           onRemove={removeContact}
+          selectedContact={selectedContact}
         />
       )}
-      {showEditModal && <EditModal onShowModal={setShowEditModal} />}
+      {showEditModal && <EditModal onShowModal={setShowEditModal} selectedContact={selectedContact} />}
     </Fragment>
   );
 };

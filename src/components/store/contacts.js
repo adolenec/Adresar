@@ -2,7 +2,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   contacts: [],
-  selectedContact: {},
   isEditingContact: false,
   rerender: false,
 };
@@ -13,9 +12,6 @@ const contactsSlice = createSlice({
   reducers: {
     setContacts(state, action) {
       state.contacts = action.payload;
-    },
-    setSelectedContact(state, action) {
-      state.selectedContact = action.payload;
     },
     setIsEditingContact(state, action) {
       state.isEditingContact = action.payload;

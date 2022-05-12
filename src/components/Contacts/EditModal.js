@@ -1,14 +1,10 @@
 import ReactDOM from "react-dom";
 import classes from "./DeleteModal.module.css";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { contactsActions } from "../store/contacts";
 import ContactsForm from "./ContactsForm";
 
-const EditOverlay = ({ onShowModal }) => {
-  const selectedContact = useSelector(
-    (state) => state.contacts.selectedContact
-  );
+const EditOverlay = ({ onShowModal, selectedContact }) => {
   const dispatch = useDispatch();
 
   const closeModal = () => {
@@ -32,7 +28,7 @@ const EditOverlay = ({ onShowModal }) => {
             <i className="fa-solid fa-close fa-2x"></i>
           </button>
         </div>
-        <ContactsForm />
+        <ContactsForm selectedContact={selectedContact} />
       </div>
     </div>
   );
@@ -42,7 +38,7 @@ const EditModal = (props) => {
   return (
     <>
       {ReactDOM.createPortal(
-        <EditOverlay onShowModal={props.onShowModal} />,
+        <EditOverlay onShowModal={props.onShowModal} selectedContact={props.selectedContact} />,
         document.getElementById("overlay")
       )}
     </>
