@@ -10,11 +10,9 @@ import Pagination from "./Pagination";
 import DeleteModal from "./DeleteModal";
 import EditModal from "./EditModal";
 
-
 import { contactsActions } from "../store/contacts";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-
 
 const firebaseConfig = {
   apiKey: "AIzaSyAuPyU-vTstxsbdjpRKaEc9tGcU2WiwEFQ",
@@ -30,7 +28,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 export const database = getDatabase(app);
 
-
 const Contacts = () => {
   const [contacts, setContacts] = useState([]);
   const [filteredContacts, setFilteredContacts] = useState([]);
@@ -43,9 +40,7 @@ const Contacts = () => {
 
   const rerender = useSelector((state) => state.contacts.rerender);
 
-
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     fetch("https://adresar-ea8a7-default-rtdb.firebaseio.com/contacts.json")
@@ -84,7 +79,6 @@ const Contacts = () => {
     return <p>Something went wrong!</p>;
   }
 
-
   let contactAInfo;
   let contactBInfo;
 
@@ -110,7 +104,6 @@ const Contacts = () => {
   const sortDescending = () => {
     const sortedContactsDescending = [...filteredContacts].sort(
       (contactA, contactB) => {
-
         contactAInfo = (
           contactA.lastName +
           contactA.name +
@@ -150,11 +143,9 @@ const Contacts = () => {
 
   const numOfPages = Math.ceil(filteredContacts.length / contactsPerPage);
 
-
   const activePage = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-
 
   const removeContact = (id) => {
     set(ref(database, `contacts/${id}`), null).then(() => {
@@ -162,14 +153,27 @@ const Contacts = () => {
     });
   };
 
-  const contactsList = filteredContacts.slice(firstContactIndex, lastContactIndex).map((contact) => (
-    <ContactItem
-      key={contact.id}
-      contact={contact}
-      onShowDeleteModal = {setShowDeleteModal}
-      onShowEditModal = {setShowEditModal}
-    />
-  ));
+  const displayDeleteModal = (selectedContact) => {
+    setShowDeleteModal(true);
+    dispatch(contactsActions.setSelectedContact(selectedContact));
+  };
+
+  const displayEditModal = (selectedContact) => {
+    setShowEditModal(true);
+    dispatch(contactsActions.setSelectedContact(selectedContact));
+    dispatch(contactsActions.setIsEditingContact(true));
+  };
+
+  const contactsList = filteredContacts
+    .slice(firstContactIndex, lastContactIndex)
+    .map((contact) => (
+      <ContactItem
+        key={contact.id}
+        contact={contact}
+        onShowDeleteModal={displayDeleteModal}
+        onShowEditModal={displayEditModal}
+      />
+    ));
 
   return (
     <Fragment>
@@ -181,14 +185,16 @@ const Contacts = () => {
           onSelectContactsPerPage={setContactsPerPage}
         />
         <div>{contactsList}</div>
-        <Pagination
-          numOfPages={numOfPages} onActivePage={activePage}
-        />
+        <Pagination numOfPages={numOfPages} onActivePage={activePage} />
       </div>
-      {showDeleteModal && <DeleteModal onShowModal={setShowDeleteModal} onRemove={removeContact} />}
-      {showEditModal && <EditModal onShowModal={setShowEditModal}/>}
+      {showDeleteModal && (
+        <DeleteModal
+          onShowModal={setShowDeleteModal}
+          onRemove={removeContact}
+        />
+      )}
+      {showEditModal && <EditModal onShowModal={setShowEditModal} />}
     </Fragment>
-
   );
 };
 export default Contacts;
