@@ -162,16 +162,10 @@ const Contacts = () => {
     });
   };
 
-
-
   const contactsList = filteredContacts.slice(firstContactIndex, lastContactIndex).map((contact) => (
     <ContactItem
       key={contact.id}
-      id={contact.id}
-      contact={contact.contact}
-      contactType={contact.contactType}
-      name={contact.name}
-      lastName={contact.lastName}
+      contact={contact}
       onShowDeleteModal = {setShowDeleteModal}
       onShowEditModal = {setShowEditModal}
     />
