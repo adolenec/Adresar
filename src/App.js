@@ -1,13 +1,11 @@
 import { Route, Switch, Redirect } from "react-router-dom";
-
-import AuthenticationPage from "./pages/AuthenticationPage";
-import NewContactPage from "./pages/NewContactPage";
-import ContactsPage from "./pages/ContactsPage";
 import { useSelector } from "react-redux";
 
-import ContactDetailPage from "./pages/ContactDetailPage";
-
 import Navigation from "./components/layout/Navigation";
+import AuthForm from "./components/authentication/AuthForm";
+import ContactDetail from "./components/Contacts/ContactDetail";
+import Contacts from "./components/Contacts/Contacts";
+import NewContact from "./components/Contacts/NewContact";
 
 function App() {
   const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);
@@ -18,21 +16,18 @@ function App() {
       <Switch>
         {!isAuthenticated && (
           <Route path="/" exact>
-            <AuthenticationPage />
+            <AuthForm/>
           </Route>
         )}
         {!isAuthenticated && <Redirect to="/" exact />}
         <Route path="/adresar">
-          <ContactsPage />
+          <Contacts/>
         </Route>
         <Route path="/kontakt/detalji/:kontaktId">
-          <ContactDetailPage />
+          <ContactDetail/>
         </Route>
         <Route path="/kontakt">
-          <NewContactPage />
-        </Route>
-        <Route path="/adresar">
-          <ContactsPage />
+          <NewContact/>
         </Route>
       </Switch>
     </>

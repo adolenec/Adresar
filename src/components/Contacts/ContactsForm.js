@@ -1,4 +1,4 @@
-import classes from "./NewContactForm.module.css";
+import classes from "./ContactsForm.module.css";
 import useInput from "../../hooks/useInput";
 import { useState } from "react";
 import { useSelector } from "react-redux";
@@ -10,7 +10,7 @@ import { contactsActions } from "../store/contacts";
 import { useHistory } from "react-router-dom";
 import ContactTypeInput from "./ContactTypeInput";
 
-const NewContactForm = () => {
+const ContactsForm = () => {
   const [successMsg, setSuccessMsg] = useState("");
   const isEditingContact = useSelector(
     (state) => state.contacts.isEditingContact
@@ -261,4 +261,4 @@ const NewContactForm = () => {
   );
 };
 
-export default NewContactForm;
+export default ContactsForm;

@@ -1,11 +1,11 @@
 import ReactDOM from "react-dom";
 import { Fragment } from "react";
 import classes from "./DeleteModal.module.css";
-import NewContactForm from "./NewContactForm";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { contactsActions } from "../store/contacts";
 import { Backdrop } from "./DeleteModal";
+import ContactsForm from "./ContactsForm";
 
 const EditOverlay = ({ onShowModal }) => {
   const selectedContact = useSelector(
@@ -27,7 +27,7 @@ const EditOverlay = ({ onShowModal }) => {
           <i className="fa-solid fa-close fa-2x"></i>
         </button>
       </div>
-      <NewContactForm />
+      <ContactsForm/>
     </div>
   );
 };

@@ -1,10 +1,9 @@
 import { useParams } from "react-router-dom";
-import { Fragment } from "react";
 import { useSelector } from "react-redux";
 import SelectedContact from "./SelectedContact";
 
 const ContactDetail = () => {
-  const contactsData = useSelector((state) => state.contacts.contactsData);
+  const contactsData = useSelector((state) => state.contacts.contacts);
   const params = useParams();
 
   const contact = contactsData.find(
@@ -12,14 +11,12 @@ const ContactDetail = () => {
   );
 
   return (
-    <Fragment>
       <SelectedContact
         name={contact.name}
         lastName={contact.lastName}
         contactType={contact.contactType}
         contact={contact.contact}
       />
-    </Fragment>
   );
 };
 

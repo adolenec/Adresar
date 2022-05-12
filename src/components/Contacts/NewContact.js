@@ -1,6 +1,5 @@
 import classes from "./NewContact.module.css";
-
-import NewContactForm from "./NewContactForm";
+import ContactsForm from "./ContactsForm";
 
 const NewContact = () => {
   return (
@@ -9,7 +8,7 @@ const NewContact = () => {
         <i className="fa-solid fa-user fa-10x"></i>
         <h2>Add new user</h2>
       </div>
-      <NewContactForm />
+      <ContactsForm/>
     </section>
   );
 };

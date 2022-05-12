@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  contactsData: [],
+  contacts: [],
   selectedContact: {},
   isEditingContact: false,
   rerender: false,
@@ -12,7 +12,7 @@ const contactsSlice = createSlice({
   initialState,
   reducers: {
     setContacts(state, action) {
-      state.contactsData = action.payload;
+      state.contacts = action.payload;
     },
     setSelectedContact(state, action) {
       state.selectedContact = action.payload;
