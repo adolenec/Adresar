@@ -27,9 +27,15 @@ const ContactItem = ({
   };
 
   const showEditModal = () => {
+    selectedContact();
     onShowEditModal(true);
     dispatch(contactsActions.setIsEditingContact(true));
   };
+
+  const showDeleteModal = () => {
+    selectedContact();
+    onShowDeleteModal(true);
+  }
   return (
     <div className={classes["contact-item"]}>
       <div className={classes["user-icon"]}>
@@ -49,18 +55,14 @@ const ContactItem = ({
         </button>
 
         <button
-          onClick={() => {
-            selectedContact();
-            showEditModal();
-          }}
+          onClick={
+            showEditModal
+          }
         >
           <i className="fa-solid fa-pencil fa-2x"></i>
         </button>
         <button
-          onClick={() => {
-            selectedContact();
-            onShowDeleteModal(true);
-          }}
+          onClick={showDeleteModal}
         >
           <i className="fa-solid fa-trash fa-2x"></i>
         </button>
