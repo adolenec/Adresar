@@ -11,16 +11,15 @@ import { useHistory } from "react-router-dom";
 import ContactTypeInput from "./ContactTypeInput";
 
 const ContactsForm = (props) => {
-  const [successMsg, setSuccessMsg] = useState("");
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   const isEditingContact = useSelector(
     (state) => state.contacts.isEditingContact
   );
-  // const selectedContact = useSelector(
-  //   (state) => state.contacts.selectedContact
-  // );
-  const dispatch = useDispatch();
+
+  const [successMsg, setSuccessMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState(null);
-  const history = useHistory();
   let today = new Date().toISOString().slice(0, 10);
 
   //name
