@@ -158,13 +158,11 @@ const Contacts = () => {
   const displayDeleteModal = (selectedContact) => {
     setSelectedContact(selectedContact);
     setShowDeleteModal(true);
-    // dispatch(contactsActions.setSelectedContact(selectedContact));
   };
 
   const displayEditModal = (selectedContact) => {
     setShowEditModal(true);
     setSelectedContact(selectedContact)
-    // dispatch(contactsActions.setSelectedContact(selectedContact));
     dispatch(contactsActions.setIsEditingContact(true));
   };
 
