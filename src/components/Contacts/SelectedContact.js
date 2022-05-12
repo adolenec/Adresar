@@ -1,6 +1,6 @@
 import classes from "./SelectedContact.module.css";
 
-const SelectedContact = ({ name, lastName, contactType, contact }) => {
+const SelectedContact = ({ name, lastName, contactType, contact, dateOfBirth }) => {
   return (
     <div className={classes.contact}>
       <div className={classes["user-icon"]}>
@@ -11,6 +11,7 @@ const SelectedContact = ({ name, lastName, contactType, contact }) => {
         <h2>Last Name: {lastName}</h2>
         <h2>Contact Type: {contactType}</h2>
         <h2>Contact: {contact}</h2>
+        <h2>Date of Birth: {dateOfBirth}</h2>
       </div>
     </div>
   );
