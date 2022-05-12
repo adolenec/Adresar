@@ -1,21 +1,6 @@
 import classes from "./DeleteModal.module.css";
 import ReactDOM from "react-dom";
-import { Fragment } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { contactsActions } from "../store/contacts";
-
-export const Backdrop = ({ onShowModal }) => {
-  const dispatch = useDispatch();
-  return (
-    <div
-      className={classes.backdrop}
-      onClick={() => {
-        onShowModal(false);
-        dispatch(contactsActions.setIsEditingContact(false));
-      }}
-    ></div>
-  );
-};
+import { useSelector } from "react-redux";
 
 const DeleteOverlay = ({ onRemove, onShowModal }) => {
   const selectedContact = useSelector(
@@ -31,21 +16,28 @@ const DeleteOverlay = ({ onRemove, onShowModal }) => {
     onShowModal(false);
   };
 
+  const closeBackrop = (e) => {
+    if (e.currentTarget !== e.target) return;
+    onShowModal(false);
+  };
+
   return (
-    <div className={classes.modal}>
-      <div className={classes.header}>
-        <h2>
-          Delete Contact - {selectedContact.name} {selectedContact.lastName}
-        </h2>
-        <button onClick={closeModal}>
-          <i className="fa-solid fa-close fa-2x"></i>
-        </button>
-      </div>
-      <div className={classes.content}>
-        <p>Are you sure you want to delete this contact?</p>
-      </div>
-      <div className={classes.actions}>
-        <button onClick={deleteContact}>Delete Contact</button>
+    <div className={classes.backdrop} onClick={closeBackrop}>
+      <div className={classes.modal}>
+        <div className={classes.header}>
+          <h2>
+            Delete Contact - {selectedContact.name} {selectedContact.lastName}
+          </h2>
+          <button onClick={closeModal}>
+            <i className="fa-solid fa-close fa-2x"></i>
+          </button>
+        </div>
+        <div className={classes.content}>
+          <p>Are you sure you want to delete this contact?</p>
+        </div>
+        <div className={classes.actions}>
+          <button onClick={deleteContact}>Delete Contact</button>
+        </div>
       </div>
     </div>
   );
@@ -53,16 +45,12 @@ const DeleteOverlay = ({ onRemove, onShowModal }) => {
 
 const DeleteModal = ({ onShowModal, onRemove }) => {
   return (
-    <Fragment>
+    <>
       {ReactDOM.createPortal(
         <DeleteOverlay onShowModal={onShowModal} onRemove={onRemove} />,
         document.getElementById("overlay")
       )}
-      {ReactDOM.createPortal(
-        <Backdrop onShowModal={onShowModal} />,
-        document.getElementById("backdrop")
-      )}
-    </Fragment>
+    </>
   );
 };
 
