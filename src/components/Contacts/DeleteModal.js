@@ -12,13 +12,8 @@ const DeleteOverlay = ({ onRemove, onShowModal, selectedContact }) => {
     onShowModal(false);
   };
 
-  const closeBackrop = (e) => {
-    if (e.currentTarget !== e.target) return;
-    onShowModal(false);
-  };
-
   return (
-    <div className={classes.backdrop} onClick={closeBackrop}>
+    <div className={classes.backdrop}>
       <div className={classes.modal}>
         <div className={classes.header}>
           <h2>
@@ -32,6 +27,7 @@ const DeleteOverlay = ({ onRemove, onShowModal, selectedContact }) => {
           <p>Are you sure you want to delete this contact?</p>
         </div>
         <div className={classes.actions}>
+          <button onClick={closeModal}>Cancel</button>
           <button onClick={deleteContact}>Delete Contact</button>
         </div>
       </div>

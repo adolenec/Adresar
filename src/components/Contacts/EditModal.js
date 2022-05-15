@@ -12,13 +12,8 @@ const EditOverlay = ({ onShowModal, selectedContact }) => {
     dispatch(contactsActions.setIsEditingContact(false));
   };
 
-  const closeBackrop = (e) => {
-    if (e.currentTarget !== e.target) return;
-    onShowModal(false);
-    dispatch(contactsActions.setIsEditingContact(false));
-  };
   return (
-    <div className={classes.backdrop} onClick={closeBackrop}>
+    <div className={classes.backdrop}>
       <div className={classes.modal}>
         <div className={classes.header}>
           <h2>
