@@ -7,24 +7,8 @@
   padding: 1.5rem 0;
 }
 
-.form-control,
 .submit-btn {
   padding: 0.5rem 3rem;
-}
-
-.form-control label {
-  display: block;
-  padding: 0.3rem 0;
-  color: rgb(97, 96, 96);
-  font-size: 1.1rem;
-}
-
-.form-control input,
-.form-control select {
-  width: 100%;
-  padding: 0.5rem;
-  border: none;
-  border-radius: 10px;
 }
 
 .submit-btn button {
@@ -40,11 +24,6 @@
 .submit-btn button:hover {
   cursor: pointer;
   background: rgb(228, 106, 7);
-}
-
-.error-msg {
-  padding: 0.2rem;
-  color: rgb(167, 19, 19);
 }
 
 .success {

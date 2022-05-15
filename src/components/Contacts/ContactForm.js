@@ -1,5 +1,6 @@
 import classes from "./ContactForm.module.css";
 import useInput from "../../hooks/useInput";
+import './common.css';
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { database } from "./Contacts";
@@ -174,7 +175,7 @@ const ContactForm = (props) => {
       className={classes.form}
       onSubmit={isEditingContact ? editContactSubmitForm : formSubmitHandler}
     >
-      <div className={classes["form-control"]}>
+      <div className="form-control">
         <label htmlFor="name">Name</label>
         <input
           type="text"
@@ -184,10 +185,10 @@ const ContactForm = (props) => {
           onBlur={nameBlurChangeHandler}
         />
         {nameInputHasError && (
-          <p className={classes["error-msg"]}>Please enter a valid name</p>
+          <p className="error-msg">Please enter a valid name</p>
         )}
       </div>
-      <div className={classes["form-control"]}>
+      <div className="form-control">
         <label htmlFor="lastName">Last Name</label>
         <input
           type="text"
@@ -197,10 +198,10 @@ const ContactForm = (props) => {
           onBlur={lastNameBlurChangeHandler}
         />
         {lastNameInputHasError && (
-          <p className={classes["error-msg"]}>Please enter a valid last name</p>
+          <p className="error-msg">Please enter a valid last name</p>
         )}
       </div>
-      <div className={classes["form-control"]}>
+      <div className="form-control">
         <label htmlFor="date">Date of Birth</label>
         <input
           value={enteredDate}
@@ -212,10 +213,10 @@ const ContactForm = (props) => {
           max={today}
         />
         {enteredDateHasError && (
-          <p className={classes["error-msg"]}>Please enter Date of Birth</p>
+          <p className="error-msg">Please enter Date of Birth</p>
         )}
       </div>
-      <div className={classes["form-control"]}>
+      <div className="form-control">
         <label htmlFor="contactType">Contact Type</label>
         <select
           id="contactType"
@@ -253,8 +254,8 @@ const ContactForm = (props) => {
           <p className={classes.success}>{successMsg}</p>
         </div>
       )}
-      <div className={classes["form-control"]}>
-        {errorMsg && <p className={classes["error-msg"]}>{errorMsg}</p>}
+      <div className="form-control">
+        {errorMsg && <p className="error-msg">{errorMsg}</p>}
       </div>
     </form>
   );
