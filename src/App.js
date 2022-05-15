@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 import Navigation from "./components/layout/Navigation";
 import AuthForm from "./components/authentication/AuthForm";
-import ContactDetail from "./components/Contacts/ContactDetail";
+import ContactDetails from "./components/Contacts/ContactDetails";
 import Contacts from "./components/Contacts/Contacts";
 import NewContact from "./components/Contacts/NewContact";
 
@@ -24,7 +24,7 @@ function App() {
           <Contacts/>
         </Route>
         <Route path="/kontakt/detalji/:kontaktId">
-          <ContactDetail/>
+          <ContactDetails/>
         </Route>
         <Route path="/kontakt">
           <NewContact/>

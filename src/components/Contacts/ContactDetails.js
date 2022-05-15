@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import SelectedContact from "./SelectedContact";
 import { useEffect, useState } from "react";
 
-const ContactDetail = () => {
+const ContactDetails = () => {
   const params = useParams();
   const [contact, setContact] = useState({});
 
@@ -29,4 +29,4 @@ const ContactDetail = () => {
   );
 };
 
-export default ContactDetail;
+export default ContactDetails;
