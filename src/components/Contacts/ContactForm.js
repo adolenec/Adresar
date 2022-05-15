@@ -1,6 +1,6 @@
 import classes from "./ContactForm.module.css";
 import useInput from "../../hooks/useInput";
-import './common.css';
+import "../layout/common.css";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { database } from "./Contacts";

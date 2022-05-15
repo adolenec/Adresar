@@ -1,4 +1,4 @@
-import './common.css';
+import "../layout/common.css";
 
 const ContactTypeInput = ({
   contactType,
@@ -15,9 +15,7 @@ const ContactTypeInput = ({
         onChange={onContactTypeChange}
         onBlur={onContactTypeBlur}
       />
-      {hasError && (
-        <p className="error-msg">Please enter a valid contact</p>
-      )}
+      {hasError && <p className="error-msg">Please enter a valid contact</p>}
     </div>
   );
 };
