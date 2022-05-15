@@ -10,7 +10,7 @@ import { contactsActions } from "../store/contacts";
 import { useHistory } from "react-router-dom";
 import ContactTypeInput from "./ContactTypeInput";
 
-const ContactsForm = (props) => {
+const ContactForm = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -260,4 +260,4 @@ const ContactsForm = (props) => {
   );
 };
 
-export default ContactsForm;
+export default ContactForm;

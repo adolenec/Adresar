@@ -2,7 +2,7 @@ import ReactDOM from "react-dom";
 import classes from "./DeleteModal.module.css";
 import { useDispatch } from "react-redux";
 import { contactsActions } from "../store/contacts";
-import ContactsForm from "./ContactsForm";
+import ContactForm from "./ContactForm";
 
 const EditOverlay = ({ onShowModal, selectedContact }) => {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const EditOverlay = ({ onShowModal, selectedContact }) => {
             <i className="fa-solid fa-close fa-2x"></i>
           </button>
         </div>
-        <ContactsForm selectedContact={selectedContact} />
+        <ContactForm selectedContact={selectedContact} />
       </div>
     </div>
   );
