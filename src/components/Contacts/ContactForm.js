@@ -170,6 +170,10 @@ const ContactForm = (props) => {
     setErrorMsg("");
   };
 
+  const hideEditModal = () => {
+    dispatch(contactsActions.hideEditModal());
+  }
+
   return (
     <form
       className={classes.form}
@@ -250,6 +254,7 @@ const ContactForm = (props) => {
       )}
       {isEditingContact && (
         <div className={classes["submit-btn"]}>
+          <button type="button" className={classes.cancel} onClick={hideEditModal}>Cancel</button>
           <button>Edit Contact</button>
           <p className={classes.success}>{successMsg}</p>
         </div>
