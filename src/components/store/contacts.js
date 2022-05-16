@@ -4,6 +4,9 @@ const initialState = {
   contacts: [],
   isEditingContact: false,
   rerender: false,
+  isEditModalOpen: false,
+  isDeleteModalOpen: false,
+  selectedContact: {},
 };
 
 const contactsSlice = createSlice({
@@ -13,11 +16,24 @@ const contactsSlice = createSlice({
     setContacts(state, action) {
       state.contacts = action.payload;
     },
-    setIsEditingContact(state, action) {
-      state.isEditingContact = action.payload;
-    },
     rerender(state) {
       state.rerender = !state.rerender;
+    },
+    showEditModal(state, action) {
+      state.isEditModalOpen = true;
+      state.selectedContact = action.payload;
+      state.isEditingContact = true;
+    },
+    hideEditModal(state) {
+      state.isEditModalOpen = false;
+      state.isEditingContact = false;
+    },
+    showDeleteModal(state, action) {
+      state.isDeleteModalOpen = true;
+      state.selectedContact = action.payload;
+    },
+    hideDeleteModal(state) {
+      state.isDeleteModalOpen = false;
     },
   },
 });

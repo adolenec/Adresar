@@ -3,7 +3,7 @@ import useInput from "../../hooks/useInput";
 import "../layout/common.css";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { database } from "./Contacts";
+import { database } from "./DeleteModal";
 import { set, ref } from "firebase/database";
 import { useDispatch } from "react-redux";
 import { contactsActions } from "../store/contacts";

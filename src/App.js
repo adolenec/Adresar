@@ -6,9 +6,13 @@ import AuthForm from "./components/authentication/AuthForm";
 import ContactDetails from "./components/Contacts/ContactDetails";
 import Contacts from "./components/Contacts/Contacts";
 import NewContact from "./components/Contacts/NewContact";
+import EditModal from "./components/Contacts/EditModal";
+import DeleteModal from "./components/Contacts/DeleteModal";
 
 function App() {
   const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);
+  const isDeleteModalOpen = useSelector((state) => state.contacts.isDeleteModalOpen);
+  const isEditModalOpen = useSelector((state) => state.contacts.isEditModalOpen);
 
   return (
     <>
@@ -30,6 +34,8 @@ function App() {
           <NewContact/>
         </Route>
       </Switch>
+      {isEditModalOpen && <EditModal/>}
+      {isDeleteModalOpen && <DeleteModal/>}
     </>
   );
 }

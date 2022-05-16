@@ -1,7 +1,7 @@
 .contact-item {
   border-bottom: 2px solid rgb(231, 89, 37);
   padding: 1rem 0rem;
-  color: #ccc;
+  color: rgb(94, 94, 94);
   display: flex;
   align-items: center;
   gap: 1.5rem;
@@ -20,7 +20,7 @@
 
 a {
   text-decoration: none;
-  color: rgb(94, 94, 94);
+  color: #ccc;
   font-weight: bold;
 }
 

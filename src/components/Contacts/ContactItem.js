@@ -1,13 +1,18 @@
 import classes from "./ContactItem.module.css";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { contactsActions } from "../store/contacts";
 
-const ContactItem = ({ onShowEditModal, onShowDeleteModal, contact }) => {
+const ContactItem = ({contact}) => {
+
+  const dispatch = useDispatch();
+
   const showEditModal = () => {
-    onShowEditModal(contact);
+    dispatch(contactsActions.showEditModal(contact));
   };
 
   const showDeleteModal = () => {
-    onShowDeleteModal(contact);
+    dispatch(contactsActions.showDeleteModal(contact));
   };
   return (
     <div className={classes["contact-item"]}>

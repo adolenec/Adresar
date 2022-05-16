@@ -1,10 +1,14 @@
 import { useParams } from "react-router-dom";
 import SelectedContact from "./SelectedContact";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 const ContactDetails = () => {
   const params = useParams();
   const [contact, setContact] = useState({});
+  const rerender = useSelector((state) => state.contacts.rerender);
+  const history = useHistory();
 
   useEffect(() => {
     fetch(
@@ -14,17 +18,16 @@ const ContactDetails = () => {
         return res.json();
       })
       .then((data) => {
-        setContact(data);
+        setContact({...data, id: params.kontaktId});
+        if(!data){
+          history.replace('/adresar');
+        }
       });
-  }, [params.kontaktId]);
+  }, [params.kontaktId, rerender, history]);
 
   return (
     <SelectedContact
-      name={contact.name}
-      lastName={contact.lastName}
-      dateOfBirth={contact.dateOfBirth}
-      contactType={contact.contactType}
-      contact={contact.contact}
+      contact={contact}
     />
   );
 };

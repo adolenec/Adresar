@@ -64,13 +64,18 @@
 }
 
 .actions button:hover {
-  background: rgb(231, 89, 37);
   cursor: pointer;
 }
 
 .modal::-webkit-scrollbar {
   width: 0;
   height: 0;
+}
+
+.actions .delete {
+  background: rgb(231, 89, 37);
+  color: black;
+  border: 1px solid black;
 }
 
 @keyframes fadeIn {
