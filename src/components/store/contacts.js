@@ -27,6 +27,7 @@ const contactsSlice = createSlice({
     hideEditModal(state) {
       state.isEditModalOpen = false;
       state.isEditingContact = false;
+      state.selectedContact = null;
     },
     showDeleteModal(state, action) {
       state.isDeleteModalOpen = true;
@@ -34,6 +35,7 @@ const contactsSlice = createSlice({
     },
     hideDeleteModal(state) {
       state.isDeleteModalOpen = false;
+      state.selectedContact = null;
     },
   },
 });
