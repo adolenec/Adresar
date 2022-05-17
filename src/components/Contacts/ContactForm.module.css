@@ -12,6 +12,7 @@
   display: flex;
   gap: .5rem;
   justify-content: flex-end;
+  align-items: center;
 }
 
 .submit-btn button {

@@ -29,11 +29,11 @@ const EditOverlay = () => {
   );
 };
 
-const EditModal = (props) => {
+const EditModal = () => {
   return (
     <>
       {ReactDOM.createPortal(
-        <EditOverlay onShowModal={props.onShowModal} selectedContact={props.selectedContact} />,
+        <EditOverlay />,
         document.getElementById("overlay")
       )}
     </>
