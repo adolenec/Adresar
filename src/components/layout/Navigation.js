@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import classes from "./Navigation.module.css";
-import { authActions } from "../store/auth";
+import { authActions } from "../../store/auth";
 
 const Navigation = () => {
   const dispatch = useDispatch();

@@ -5,7 +5,7 @@ import ContactItem from "./ContactItem";
 import ContactsHeader from "./ContactsHeader";
 import Pagination from "./Pagination";
 
-import { contactsActions } from "../store/contacts";
+import { contactsActions } from "../../store/contacts";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 

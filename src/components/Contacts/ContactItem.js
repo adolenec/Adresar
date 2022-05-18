@@ -1,7 +1,7 @@
 import classes from "./ContactItem.module.css";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { contactsActions } from "../store/contacts";
+import { contactsActions } from "../../store/contacts";
 
 const ContactItem = ({contact}) => {
 

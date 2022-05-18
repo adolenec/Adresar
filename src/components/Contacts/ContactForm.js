@@ -3,10 +3,10 @@ import useInput from "../../hooks/useInput";
 import "../layout/common.css";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { database } from "../config/config";
+import { database } from "../../config/config";
 import { set, ref } from "firebase/database";
 import { useDispatch } from "react-redux";
-import { contactsActions } from "../store/contacts";
+import { contactsActions } from "../../store/contacts";
 
 import { useHistory } from "react-router-dom";
 import ContactTypeInput from "./ContactTypeInput";

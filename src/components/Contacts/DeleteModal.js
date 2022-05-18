@@ -1,8 +1,8 @@
 import classes from "./DeleteModal.module.css";
 import ReactDOM from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { contactsActions } from "../store/contacts";
-import { database } from "../config/config";
+import { contactsActions } from "../../store/contacts";
+import { database } from "../../config/config";
 import { ref, set } from "firebase/database";
 
 const DeleteOverlay = () => {

@@ -1,7 +1,7 @@
 import ReactDOM from "react-dom";
 import classes from "./DeleteModal.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { contactsActions } from "../store/contacts";
+import { contactsActions } from "../../store/contacts";
 import ContactForm from "./ContactForm";
 
 const EditOverlay = () => {

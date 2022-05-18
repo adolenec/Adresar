@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { contactsActions } from "../store/contacts";
+import { contactsActions } from "../../store/contacts";
 import classes from "./SelectedContact.module.css";
 
 const SelectedContact = ({ contact }) => {

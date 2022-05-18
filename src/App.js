@@ -3,11 +3,11 @@ import { useSelector } from "react-redux";
 
 import Navigation from "./components/layout/Navigation";
 import AuthForm from "./components/authentication/AuthForm";
-import ContactDetails from "./components/Contacts/ContactDetails";
-import Contacts from "./components/Contacts/Contacts";
-import NewContact from "./components/Contacts/NewContact";
-import EditModal from "./components/Contacts/EditModal";
-import DeleteModal from "./components/Contacts/DeleteModal";
+import ContactDetails from "./components/contacts/ContactDetails";
+import Contacts from "./components/contacts/Contacts";
+import NewContact from "./components/contacts/NewContact";
+import EditModal from "./components/contacts/EditModal";
+import DeleteModal from "./components/contacts/DeleteModal";
 
 function App() {
   const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);
