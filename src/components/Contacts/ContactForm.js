@@ -158,6 +158,7 @@ const ContactForm = (props) => {
       dateOfBirth: enteredDate,
       contactType: enteredContactType,
       contact: enteredContactValue,
+      isFavourite: props.selectedContact.isFavourite
     };
 
     set(

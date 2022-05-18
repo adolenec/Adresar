@@ -1,6 +1,6 @@
 import classes from "./ContactItem.module.css";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { contactsActions } from "../../store/contacts";
 import { database } from "../../config/config";
 import { set, ref } from "firebase/database";
@@ -9,6 +9,7 @@ import { useState } from "react";
 const ContactItem = ({ contact }) => {
   const dispatch = useDispatch();
   const [isFavourite, setIsFavourite] = useState(contact.isFavourite);
+  const showIcons = useSelector((state) => state.contacts.isShowingIcons);
 
   const showEditModal = () => {
     dispatch(contactsActions.showEditModal(contact));
@@ -46,12 +47,12 @@ const ContactItem = ({ contact }) => {
         <button onClick={setFavouriteContact} className={classes[starClasses]}>
           <i className="fa-solid fa-star fa-2x"></i>
         </button>
-        <button onClick={showEditModal} className={classes["not-favourite"]}>
+        {showIcons && <button onClick={showEditModal} className={classes["not-favourite"]}>
           <i className="fa-solid fa-pencil fa-2x"></i>
-        </button>
-        <button onClick={showDeleteModal} className={classes["not-favourite"]}>
+        </button>}
+        {showIcons && <button onClick={showDeleteModal} className={classes["not-favourite"]}>
           <i className="fa-solid fa-trash fa-2x"></i>
-        </button>
+        </button>}
       </div>
     </div>
   );
