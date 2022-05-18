@@ -1,6 +1,5 @@
-.form-control,
-.submit-btn {
-  padding: 0.5rem 3rem;
+.form-control {
+  padding: 0.5rem;
 }
 
 .form-control label {
@@ -16,6 +15,10 @@
   padding: 0.5rem;
   border: none;
   border-radius: 10px;
+}
+
+.form-control{
+  padding: 0.5rem 2rem;
 }
 
 .error-msg {

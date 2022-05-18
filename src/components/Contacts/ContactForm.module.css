@@ -1,0 +1,42 @@
+.form input:focus {
+  outline: none;
+}
+
+.form {
+  flex: 1;
+  padding: 1.5rem 0;
+}
+
+.submit-btn {
+  padding: 0.5rem 2rem;
+  display: flex;
+  gap: .5rem;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.submit-btn button {
+  padding: 0.5rem;
+  background: none;
+  border: none;
+  background: rgb(231, 89, 37);
+  border-radius: 5px;
+  margin-top: 0.5rem;
+}
+
+.submit-btn button.cancel{
+  color: white;
+  background: transparent;
+  border: none;
+  border: 1px solid wheat;
+  border-radius: 5px;
+}
+
+.submit-btn button:hover {
+  cursor: pointer;
+}
+
+.success {
+  padding: 0.2rem 0;
+  color: rgb(228, 106, 7);
+}

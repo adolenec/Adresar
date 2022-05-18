@@ -3,7 +3,7 @@ import classes from "./AuthForm.module.css";
 import addressBg from "../../assets/addressBook.webp";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { authActions } from '../store/auth'
+import { authActions } from "../../store/auth";
 
 import useInput from "../../hooks/useInput";
 
@@ -55,7 +55,6 @@ const AuthForm = () => {
     const url = isLogin
       ? "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAuPyU-vTstxsbdjpRKaEc9tGcU2WiwEFQ"
       : "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAuPyU-vTstxsbdjpRKaEc9tGcU2WiwEFQ";
-
 
     fetch(url, {
       method: "POST",

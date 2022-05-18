@@ -1,13 +1,18 @@
 import { Route, Switch, Redirect } from "react-router-dom";
-
-import AuthenticationPage from "./pages/AuthenticationPage";
-import NewContactPage from "./pages/NewContactPage";
-import ContactsPage from "./pages/ContactsPage";
 import { useSelector } from "react-redux";
+
 import Navigation from "./components/layout/Navigation";
+import AuthForm from "./components/authentication/AuthForm";
+import ContactDetails from "./components/contacts/ContactDetails";
+import Contacts from "./components/contacts/Contacts";
+import NewContact from "./components/contacts/NewContact";
+import EditModal from "./components/contacts/EditModal";
+import DeleteModal from "./components/contacts/DeleteModal";
 
 function App() {
   const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);
+  const isDeleteModalOpen = useSelector((state) => state.contacts.isDeleteModalOpen);
+  const isEditModalOpen = useSelector((state) => state.contacts.isEditModalOpen);
 
   return (
     <>
@@ -15,17 +20,22 @@ function App() {
       <Switch>
         {!isAuthenticated && (
           <Route path="/" exact>
-            <AuthenticationPage />
+            <AuthForm/>
           </Route>
         )}
         {!isAuthenticated && <Redirect to="/" exact />}
-        <Route path="/kontakt">
-          <NewContactPage />
-        </Route>
         <Route path="/adresar">
-          <ContactsPage />
+          <Contacts/>
+        </Route>
+        <Route path="/kontakt/detalji/:kontaktId">
+          <ContactDetails/>
+        </Route>
+        <Route path="/kontakt">
+          <NewContact/>
         </Route>
       </Switch>
+      {isEditModalOpen && <EditModal/>}
+      {isDeleteModalOpen && <DeleteModal/>}
     </>
   );
 }

@@ -1,0 +1,73 @@
+.contact {
+  max-width: 95%;
+  width: 30rem;
+  position: relative;
+  left: 50%;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  transform: translateX(-50%);
+  margin-top: 8rem;
+  margin-bottom: 8rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  color: rgb(184, 183, 183);
+}
+
+.user-icon i {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ccc;
+  height: 250px;
+  width: 250px;
+  background: rgb(56, 56, 56);
+  border-radius: 50%;
+}
+
+.contact-info h3 {
+  border-bottom: 2px solid rgb(155, 154, 154);
+  padding: 1rem 0;
+  color: rgb(155, 154, 154);
+}
+
+.contact-info h3:last-child {
+  border-bottom: none;
+}
+
+.contact-info,
+.main-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-info {
+  background: rgb(56, 56, 56);
+  padding: 1.5rem 1rem;
+  border-radius: 10px;
+  width: 95%;
+}
+
+.main-info {
+  text-align: center;
+  gap: 0.5rem;
+}
+
+.actions {
+  display: flex;
+  gap: 3rem;
+}
+
+.actions button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: rgb(77, 76, 76);
+}
+
+.actions button:hover {
+  color: #ccc;
+  transform: scale(1.1);
+}

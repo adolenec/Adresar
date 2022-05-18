@@ -1,4 +1,4 @@
-import classes from "./ContactTypeInput.module.css";
+import "../layout/common.css";
 
 const ContactTypeInput = ({
   contactType,
@@ -7,7 +7,7 @@ const ContactTypeInput = ({
   hasError,
 }) => {
   return (
-    <div className={classes["form-control"]}>
+    <div className="form-control">
       <label htmlFor={contactType.value}>{contactType.label}</label>
       <input
         id={contactType.value}
@@ -15,9 +15,7 @@ const ContactTypeInput = ({
         onChange={onContactTypeChange}
         onBlur={onContactTypeBlur}
       />
-      {hasError && (
-        <p className={classes["error-msg"]}>Please enter a valid contact</p>
-      )}
+      {hasError && <p className="error-msg">Please enter a valid contact</p>}
     </div>
   );
 };
