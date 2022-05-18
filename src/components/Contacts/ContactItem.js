@@ -27,7 +27,7 @@ const ContactItem = ({ contact }) => {
     });
   };
 
-  const starClasses = isFavourite === true ? "favourite" : "not-favourite";
+  const starClasses = isFavourite ? "favourite" : "not-favourite";
 
   return (
     <div className={classes["contact-item"]}>
