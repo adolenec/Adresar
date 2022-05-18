@@ -41,6 +41,7 @@ const Contacts = () => {
             dateOfBirth: responseData[key].contact.dateOfBirth,
             name: responseData[key].contact.name,
             lastName: responseData[key].contact.lastName,
+            isFavourite: responseData[key].contact.isFavourite
           });
         }
         setFilteredContacts(loadedContacts);

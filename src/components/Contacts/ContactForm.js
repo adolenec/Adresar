@@ -103,6 +103,7 @@ const ContactForm = (props) => {
       dateOfBirth: enteredDate,
       contactType: enteredContactType,
       contact: enteredContactValue,
+      isFavourite: false
     };
 
     fetch("https://adresar-ea8a7-default-rtdb.firebaseio.com/contacts.json", {
