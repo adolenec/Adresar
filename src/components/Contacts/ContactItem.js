@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { contactsActions } from "../../store/contacts";
 
-const ContactItem = ({contact}) => {
-
+const ContactItem = ({ contact }) => {
   const dispatch = useDispatch();
 
   const showEditModal = () => {
@@ -31,7 +30,6 @@ const ContactItem = ({contact}) => {
         <button>
           <i className="fa-solid fa-star fa-2x"></i>
         </button>
-
         <button onClick={showEditModal}>
           <i className="fa-solid fa-pencil fa-2x"></i>
         </button>
