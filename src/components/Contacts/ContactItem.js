@@ -47,12 +47,19 @@ const ContactItem = ({ contact }) => {
         <button onClick={setFavouriteContact} className={classes[starClasses]}>
           <i className="fa-solid fa-star fa-2x"></i>
         </button>
-        {showIcons && <button onClick={showEditModal} className={classes["not-favourite"]}>
-          <i className="fa-solid fa-pencil fa-2x"></i>
-        </button>}
-        {showIcons && <button onClick={showDeleteModal} className={classes["not-favourite"]}>
-          <i className="fa-solid fa-trash fa-2x"></i>
-        </button>}
+        {showIcons && (
+          <button onClick={showEditModal} className={classes["not-favourite"]}>
+            <i className="fa-solid fa-pencil fa-2x"></i>
+          </button>
+        )}
+        {showIcons && (
+          <button
+            onClick={showDeleteModal}
+            className={classes["not-favourite"]}
+          >
+            <i className="fa-solid fa-trash fa-2x"></i>
+          </button>
+        )}
       </div>
     </div>
   );
