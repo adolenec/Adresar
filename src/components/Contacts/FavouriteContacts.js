@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import ContactItem from "./ContactItem";
 import "../layout/common.css";
 import { useDispatch } from "react-redux";
-import { contactsActions } from "../../store/contacts";
 
 const FavouriteContacts = () => {
   const [favourites, setFavourites] = useState([]);
@@ -35,7 +34,6 @@ const FavouriteContacts = () => {
           }
         }
         setFavourites(favouriteContacts);
-        dispatch(contactsActions.showIcons(false));
       })
       .catch(() => {
         setError(true);
@@ -49,7 +47,11 @@ const FavouriteContacts = () => {
   return (
     <div className="contacts-container">
       {favourites.map((favourite) => (
-        <ContactItem key={favourite.id} contact={favourite} />
+        <ContactItem
+          key={favourite.id}
+          contact={favourite}
+          isEditable={false}
+        />
       ))}
     </div>
   );

@@ -7,7 +7,6 @@ const initialState = {
   isEditModalOpen: false,
   isDeleteModalOpen: false,
   selectedContact: {},
-  isShowingIcons: true
 };
 
 const contactsSlice = createSlice({
@@ -38,9 +37,6 @@ const contactsSlice = createSlice({
       state.isDeleteModalOpen = false;
       state.selectedContact = null;
     },
-    showIcons(state, action){
-      state.isShowingIcons = action.payload;
-    }
   },
 });
 

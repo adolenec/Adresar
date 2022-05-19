@@ -44,7 +44,6 @@ const Contacts = () => {
         }
         setFilteredContacts(loadedContacts);
         dispatch(contactsActions.setContacts(loadedContacts));
-        dispatch(contactsActions.showIcons(true));
       })
       .catch(() => {
         setError(true);
