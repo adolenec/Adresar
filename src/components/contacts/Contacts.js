@@ -1,6 +1,6 @@
 import { useState, useEffect, Fragment } from "react";
 
-import classes from "./Contacts.module.css";
+import "../layout/common.css";
 import ContactItem from "./ContactItem";
 import ContactsHeader from "./ContactsHeader";
 import Pagination from "./Pagination";
@@ -29,18 +29,17 @@ const Contacts = () => {
         return res.json();
       })
       .then((data) => {
-        const responseData = data;
-
         const loadedContacts = [];
 
-        for (const key in responseData) {
+        for (const key in data) {
           loadedContacts.push({
             id: key,
-            contact: responseData[key].contact.contact,
-            contactType: responseData[key].contact.contactType,
-            dateOfBirth: responseData[key].contact.dateOfBirth,
-            name: responseData[key].contact.name,
-            lastName: responseData[key].contact.lastName,
+            contact: data[key].contact.contact,
+            contactType: data[key].contact.contactType,
+            dateOfBirth: data[key].contact.dateOfBirth,
+            name: data[key].contact.name,
+            lastName: data[key].contact.lastName,
+            isFavourite: data[key].contact.isFavourite,
           });
         }
         setFilteredContacts(loadedContacts);
@@ -129,7 +128,7 @@ const Contacts = () => {
 
   return (
     <Fragment>
-      <div className={classes["contacts-container"]}>
+      <div className="contacts-container">
         <ContactsHeader
           onSortAsc={sortAscending}
           onSortDesc={sortDescending}

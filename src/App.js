@@ -8,6 +8,7 @@ import Contacts from "./components/contacts/Contacts";
 import NewContact from "./components/contacts/NewContact";
 import EditModal from "./components/contacts/EditModal";
 import DeleteModal from "./components/contacts/DeleteModal";
+import FavouriteContacts from "./components/contacts/FavouriteContacts";
 
 function App() {
   const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);
@@ -24,7 +25,7 @@ function App() {
           </Route>
         )}
         {!isAuthenticated && <Redirect to="/" exact />}
-        <Route path="/adresar">
+        <Route path="/adresar" exact>
           <Contacts/>
         </Route>
         <Route path="/kontakt/detalji/:kontaktId">
@@ -32,6 +33,9 @@ function App() {
         </Route>
         <Route path="/kontakt">
           <NewContact/>
+        </Route>
+        <Route path='/adresar/omiljeni'>
+          <FavouriteContacts/>
         </Route>
       </Switch>
       {isEditModalOpen && <EditModal/>}
